@@ -44,19 +44,21 @@ type: feat | fix | refactor | docs | chore | perf
 ### PR 흐름
 
 1. `feature/#{N}` 브랜치 생성
-2. 개발 후 `/pr-create` 로 PR 생성 (base: develop)
-3. `/pr-review` 로 리뷰 → `/pr-apply` 로 반영
+2. 개발 후 `pr-create` 스킬로 PR 생성 (base: develop)
+3. `pr-review` 스킬로 리뷰 → `pr-apply` 스킬로 반영
 
 ## Available Skills
 
-| 명령어 | 용도 |
-|--------|------|
-| `/plan` | 이슈 분석 → 구현 계획 문서 생성 |
-| `/issue-create` | 변경사항 분석 → GitHub 이슈 생성 |
-| `/pr-create` | 현재 브랜치 커밋 분석 → PR 생성 |
-| `/pr-review` | PR 코드 리뷰 → 코멘트 등록 |
-| `/pr-apply` | PR 리뷰 코멘트 → 코드 반영 |
-| `/question` | 질문 답변 → docs/claude/question/ 저장 |
+스킬은 `.claude/skills/` 디렉터리에 정의되어 있으며, Claude Code 대화에서 `/스킬명`으로 호출합니다.
+
+| 스킬 | 용도 |
+|------|------|
+| `plan` | 이슈 분석 → 구현 계획 문서 생성 |
+| `issue-create` | 변경사항 분석 → GitHub 이슈 생성 |
+| `pr-create` | 현재 브랜치 커밋 분석 → PR 생성 |
+| `pr-review` | PR 코드 리뷰 → 코멘트 등록 |
+| `pr-apply` | PR 리뷰 코멘트 → 코드 반영 |
+| `question` | 질문 답변 → docs/claude/question/ 저장 |
 
 ## 빌드 & 실행
 

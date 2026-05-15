@@ -46,7 +46,10 @@ description: 입력 내용을 분석해 적절한 템플릿으로 GitHub 이슈�
 ```
 gh issue create \
   --title "[접두어] 제목" \
-  --body "본문" \
+  --body "$(cat <<'EOF'
+본문
+EOF
+)" \
   --label "라벨"
 ```
 

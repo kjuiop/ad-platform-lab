@@ -1,4 +1,5 @@
 
+
 # [#issue] [type]: 한 줄 요약
 # 예: [#1] feat: 광고 캠페인 CRUD API 구현
 

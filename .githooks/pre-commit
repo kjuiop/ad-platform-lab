@@ -8,8 +8,8 @@ if [ -z "$staged_java_files" ]; then
   exit 0
 fi
 
-# spotlessApply 태스크가 없으면 스킵
-if ! ./gradlew tasks --all -q 2>/dev/null | grep -q 'spotlessApply'; then
+# Spotless 플러그인이 선언되어 있지 않으면 스킵
+if ! grep -q 'spotless' build.gradle.kts 2>/dev/null; then
   echo "[pre-commit] Spotless plugin not configured. Skipping format check."
   echo "[pre-commit] To enable: add 'com.diffplug.spotless' plugin to build.gradle.kts"
   exit 0
@@ -19,7 +19,7 @@ echo "[pre-commit] Running Spotless (auto-fix)..."
 
 ./gradlew -q spotlessApply
 
-echo "$staged_java_files" | xargs git add
+echo "$staged_java_files" | while IFS= read -r f; do git add "$f"; done
 
 if ! git diff --cached --quiet; then
   echo "[pre-commit] Spotless applied. Staged diff summary:"

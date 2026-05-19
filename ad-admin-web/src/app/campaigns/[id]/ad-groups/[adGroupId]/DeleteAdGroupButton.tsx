@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
 
 export function DeleteAdGroupButton({
   campaignId,
@@ -18,11 +19,13 @@ export function DeleteAdGroupButton({
   }
 
   return (
-    <button
+    <Button
+      variant="outline"
+      size="sm"
+      className="text-destructive border-destructive/30 hover:bg-destructive/10"
       onClick={handleDelete}
-      className="px-3 py-1 text-xs border border-red-300 text-red-600 rounded hover:bg-red-50"
     >
       삭제
-    </button>
+    </Button>
   );
 }

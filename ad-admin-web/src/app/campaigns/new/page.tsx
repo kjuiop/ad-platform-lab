@@ -2,6 +2,10 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function NewCampaignPage() {
   const router = useRouter();
@@ -31,57 +35,49 @@ export default function NewCampaignPage() {
   }
 
   return (
-    <div className="max-w-lg">
-      <h1 className="text-xl font-bold mb-6">캠페인 생성</h1>
-      {error && (
-        <p className="text-red-600 text-sm mb-4">{error}</p>
-      )}
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        <div>
-          <label className="block text-sm font-medium mb-1">캠페인명 *</label>
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-            className="w-full border rounded px-3 py-2 text-sm"
-            placeholder="예: 여름 시즌 프로모션"
-          />
-        </div>
-        <div>
-          <label className="block text-sm font-medium mb-1">시작일</label>
-          <input
-            type="date"
-            value={startDate}
-            onChange={(e) => setStartDate(e.target.value)}
-            className="w-full border rounded px-3 py-2 text-sm"
-          />
-        </div>
-        <div>
-          <label className="block text-sm font-medium mb-1">종료일</label>
-          <input
-            type="date"
-            value={endDate}
-            onChange={(e) => setEndDate(e.target.value)}
-            className="w-full border rounded px-3 py-2 text-sm"
-          />
-        </div>
-        <div className="flex gap-2 mt-2">
-          <button
-            type="submit"
-            className="px-4 py-2 bg-blue-600 text-white text-sm rounded hover:bg-blue-700"
-          >
-            생성
-          </button>
-          <button
-            type="button"
-            onClick={() => router.back()}
-            className="px-4 py-2 border border-gray-300 text-sm rounded hover:bg-gray-50"
-          >
-            취소
-          </button>
-        </div>
-      </form>
-    </div>
+    <Card className="max-w-lg">
+      <CardHeader>
+        <CardTitle>캠페인 생성</CardTitle>
+      </CardHeader>
+      <CardContent>
+        {error && <p className="text-destructive text-sm mb-4">{error}</p>}
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          <div className="space-y-2">
+            <Label htmlFor="name">캠페인명 *</Label>
+            <Input
+              id="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+              placeholder="예: 여름 시즌 프로모션"
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="startDate">시작일</Label>
+            <Input
+              id="startDate"
+              type="date"
+              value={startDate}
+              onChange={(e) => setStartDate(e.target.value)}
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="endDate">종료일</Label>
+            <Input
+              id="endDate"
+              type="date"
+              value={endDate}
+              onChange={(e) => setEndDate(e.target.value)}
+            />
+          </div>
+          <div className="flex gap-2 pt-2">
+            <Button type="submit">생성</Button>
+            <Button type="button" variant="outline" onClick={() => router.back()}>
+              취소
+            </Button>
+          </div>
+        </form>
+      </CardContent>
+    </Card>
   );
 }

@@ -2,6 +2,7 @@
 
 import { AdStatus } from "@/types/ad";
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
 
 const transitions: Record<AdStatus, { label: string; next: AdStatus }[]> = {
   DRAFT: [{ label: "시작", next: "ACTIVE" }],
@@ -39,13 +40,14 @@ export function StatusActions({ status, apiUrl }: StatusActionsProps) {
   return (
     <div className="flex gap-2">
       {actions.map((action) => (
-        <button
+        <Button
           key={action.next}
+          variant="outline"
+          size="sm"
           onClick={() => handleChange(action.next)}
-          className="px-3 py-1 text-xs border border-gray-300 rounded hover:bg-gray-100"
         >
           {action.label}
-        </button>
+        </Button>
       ))}
     </div>
   );

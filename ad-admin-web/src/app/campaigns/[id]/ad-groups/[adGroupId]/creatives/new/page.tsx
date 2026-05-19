@@ -3,6 +3,11 @@
 import { useRouter, useParams } from "next/navigation";
 import { useState } from "react";
 import { CreativePreview } from "@/components/CreativePreview";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function NewCreativePage() {
   const router = useRouter();
@@ -31,85 +36,74 @@ export default function NewCreativePage() {
       setError(data.error ?? "생성에 실패했습니다.");
       return;
     }
-    router.push(
-      `/campaigns/${params.id}/ad-groups/${params.adGroupId}`,
-    );
+    router.push(`/campaigns/${params.id}/ad-groups/${params.adGroupId}`);
   }
 
   return (
     <div className="flex gap-8">
-      <div className="max-w-lg flex-1">
-        <h1 className="text-xl font-bold mb-6">소재 생성</h1>
-        {error && <p className="text-red-600 text-sm mb-4">{error}</p>}
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          <div>
-            <label className="block text-sm font-medium mb-1">제목 *</label>
-            <input
-              type="text"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              required
-              className="w-full border rounded px-3 py-2 text-sm"
-              placeholder="예: 봄맞이 가전 세일"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium mb-1">설명</label>
-            <textarea
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              className="w-full border rounded px-3 py-2 text-sm"
-              rows={3}
-              placeholder="예: 인기 가전제품을 특별 할인가에 만나보세요."
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium mb-1">
-              이미지 URL
-            </label>
-            <input
-              type="url"
-              value={imageUrl}
-              onChange={(e) => setImageUrl(e.target.value)}
-              className="w-full border rounded px-3 py-2 text-sm"
-              placeholder="https://example.com/image.png"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium mb-1">
-              클릭 URL *
-            </label>
-            <input
-              type="url"
-              value={clickUrl}
-              onChange={(e) => setClickUrl(e.target.value)}
-              required
-              className="w-full border rounded px-3 py-2 text-sm"
-              placeholder="https://example.com/landing"
-            />
-          </div>
-          <div className="flex gap-2 mt-2">
-            <button
-              type="submit"
-              className="px-4 py-2 bg-blue-600 text-white text-sm rounded hover:bg-blue-700"
-            >
-              생성
-            </button>
-            <button
-              type="button"
-              onClick={() => router.back()}
-              className="px-4 py-2 border border-gray-300 text-sm rounded hover:bg-gray-50"
-            >
-              취소
-            </button>
-          </div>
-        </form>
-      </div>
+      <Card className="max-w-lg flex-1">
+        <CardHeader>
+          <CardTitle>소재 생성</CardTitle>
+        </CardHeader>
+        <CardContent>
+          {error && <p className="text-destructive text-sm mb-4">{error}</p>}
+          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="title">제목 *</Label>
+              <Input
+                id="title"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                required
+                placeholder="예: 봄맞이 가전 세일"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="description">설명</Label>
+              <Textarea
+                id="description"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                rows={3}
+                placeholder="예: 인기 가전제품을 특별 할인가에 만나보세요."
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="imageUrl">이미지 URL</Label>
+              <Input
+                id="imageUrl"
+                type="url"
+                value={imageUrl}
+                onChange={(e) => setImageUrl(e.target.value)}
+                placeholder="https://example.com/image.png"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="clickUrl">클릭 URL *</Label>
+              <Input
+                id="clickUrl"
+                type="url"
+                value={clickUrl}
+                onChange={(e) => setClickUrl(e.target.value)}
+                required
+                placeholder="https://example.com/landing"
+              />
+            </div>
+            <div className="flex gap-2 pt-2">
+              <Button type="submit">생성</Button>
+              <Button type="button" variant="outline" onClick={() => router.back()}>
+                취소
+              </Button>
+            </div>
+          </form>
+        </CardContent>
+      </Card>
 
-      {/* 미리보기 */}
       {title && (
         <div className="w-80">
-          <h2 className="text-sm font-medium text-gray-500 mb-3">미리보기</h2>
+          <p className="text-sm font-medium text-muted-foreground mb-3">
+            미리보기
+          </p>
           <CreativePreview
             creative={{
               id: 0,

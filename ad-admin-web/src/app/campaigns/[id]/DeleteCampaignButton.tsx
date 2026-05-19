@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
 
 export function DeleteCampaignButton({ id }: { id: string }) {
   const router = useRouter();
@@ -12,11 +13,8 @@ export function DeleteCampaignButton({ id }: { id: string }) {
   }
 
   return (
-    <button
-      onClick={handleDelete}
-      className="px-3 py-1 text-xs border border-red-300 text-red-600 rounded hover:bg-red-50"
-    >
+    <Button variant="outline" size="sm" className="text-destructive border-destructive/30 hover:bg-destructive/10" onClick={handleDelete}>
       삭제
-    </button>
+    </Button>
   );
 }

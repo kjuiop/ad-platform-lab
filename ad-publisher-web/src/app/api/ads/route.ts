@@ -46,16 +46,32 @@ const mockAds: Record<string, AdResponse> = {
   },
 };
 
-const defaultAd: AdResponse = {
-  adId: "ad-default",
-  title: "광고 문의",
-  description: "이 자리에 광고를 게재하고 싶으시다면 문의해주세요.",
-  imageUrl: null,
-  clickUrl: "#",
-};
-
 export async function GET(request: NextRequest) {
-  const slotId = request.nextUrl.searchParams.get("slotId") ?? "";
-  const ad = mockAds[slotId] ?? defaultAd;
+  const slotId = request.nextUrl.searchParams.get("slotId");
+
+  if (!slotId) {
+    return NextResponse.json(
+      { error: "slotId 파라미터가 필요합니다." },
+      { status: 400 },
+    );
+  }
+
+  const adServerUrl = process.env.AD_SERVER_URL;
+
+  // 외부 Ad Server가 설정되어 있으면 프록시
+  if (adServerUrl) {
+    const res = await fetch(`${adServerUrl}/api/ads?slotId=${slotId}`);
+    const data = await res.json();
+    return NextResponse.json(data, { status: res.status });
+  }
+
+  // 설정이 없으면 Mock 응답
+  const ad = mockAds[slotId];
+  if (!ad) {
+    return NextResponse.json(
+      { error: `알 수 없는 slotId: "${slotId}"` },
+      { status: 404 },
+    );
+  }
   return NextResponse.json(ad);
 }

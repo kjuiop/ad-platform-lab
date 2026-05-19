@@ -12,8 +12,7 @@ export function AdSlot({ slotId, className }: AdSlotProps) {
   const [ad, setAd] = useState<AdResponse | null>(null);
 
   useEffect(() => {
-    const adServerUrl = process.env.NEXT_PUBLIC_AD_SERVER_URL ?? "";
-    fetch(`${adServerUrl}/api/ads?slotId=${slotId}`)
+    fetch(`/api/ads?slotId=${slotId}`)
       .then((res) => res.json())
       .then(setAd)
       .catch(() => setAd(null));

@@ -55,6 +55,12 @@ subprojects {
         }
     }
 
+    tasks.named("checkstyleMain") {
+        mustRunAfter("spotlessCheck")
+    }
+    tasks.named("checkstyleTest") {
+        mustRunAfter("spotlessCheck")
+    }
     tasks.named("check") {
         dependsOn("spotlessCheck", "checkstyleMain", "checkstyleTest")
     }

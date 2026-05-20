@@ -4,7 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /** 광고 관리자 API 애플리케이션. */
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"org.giglab.ad"})
 public class AdAdminApiApplication {
 
   /** 애플리케이션 진입점. */

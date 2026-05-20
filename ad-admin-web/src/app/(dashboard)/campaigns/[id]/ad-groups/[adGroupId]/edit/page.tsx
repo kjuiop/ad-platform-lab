@@ -19,13 +19,17 @@ export default function EditAdGroupPage() {
 
   useEffect(() => {
     fetch(`/api/ad-groups/${params.adGroupId}`)
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) throw new Error(`데이터를 불러오지 못했습니다. (${res.status})`);
+        return res.json();
+      })
       .then((data: AdGroup) => {
         setName(data.name);
         setBidType(data.bidType);
         setBidAmount(String(data.bidAmount));
-        setLoading(false);
-      });
+      })
+      .catch((err) => setError(err.message))
+      .finally(() => setLoading(false));
   }, [params.adGroupId]);
 
   async function handleSubmit(e: React.FormEvent) {

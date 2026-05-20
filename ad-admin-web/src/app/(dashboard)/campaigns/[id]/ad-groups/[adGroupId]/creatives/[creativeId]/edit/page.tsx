@@ -26,14 +26,18 @@ export default function EditCreativePage() {
 
   useEffect(() => {
     fetch(`/api/creatives/${params.creativeId}`)
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) throw new Error(`데이터를 불러오지 못했습니다. (${res.status})`);
+        return res.json();
+      })
       .then((data: Creative) => {
         setTitle(data.title);
         setDescription(data.description ?? "");
         setImageUrl(data.imageUrl ?? "");
         setClickUrl(data.clickUrl);
-        setLoading(false);
-      });
+      })
+      .catch((err) => setError(err.message))
+      .finally(() => setLoading(false));
   }, [params.creativeId]);
 
   async function handleSubmit(e: React.FormEvent) {

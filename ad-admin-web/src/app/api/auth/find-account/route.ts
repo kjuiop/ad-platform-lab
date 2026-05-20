@@ -2,12 +2,21 @@ import { NextRequest, NextResponse } from "next/server";
 import { mockUsers } from "@/lib/mock-users";
 
 export async function POST(request: NextRequest) {
-  const { name } = await request.json();
+  const { name, phone } = await request.json();
 
-  const found = mockUsers.find((u) => u.user.name === name);
+  if (!name || !phone) {
+    return NextResponse.json(
+      { error: "이름과 연락처를 모두 입력해주세요." },
+      { status: 400 },
+    );
+  }
+
+  const found = mockUsers.find(
+    (u) => u.user.name === name && u.phone === phone,
+  );
   if (!found) {
     return NextResponse.json(
-      { error: "일치하는 계정을 찾을 수 없습니다." },
+      { error: "입력하신 정보와 일치하는 계정을 찾을 수 없습니다." },
       { status: 404 },
     );
   }

@@ -1,17 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
-import { mockUsers } from "@/lib/mock-users";
 
 export async function POST(request: NextRequest) {
   const { email } = await request.json();
 
-  const found = mockUsers.find((u) => u.email === email);
-  if (!found) {
+  if (!email) {
     return NextResponse.json(
-      { error: "등록되지 않은 이메일입니다." },
-      { status: 404 },
+      { error: "이메일을 입력해주세요." },
+      { status: 400 },
     );
   }
 
-  // Mock: 실제로 이메일을 보내지 않고 성공 응답만 반환
+  // Mock: 계정 존재 여부와 관계없이 동일한 성공 응답 반환 (계정 열거 방지)
   return NextResponse.json({ ok: true });
 }

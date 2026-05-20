@@ -5,8 +5,25 @@ const publicPaths = ["/login", "/signup", "/find-account", "/find-password"];
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // API, 정적 파일은 통과
-  if (pathname.startsWith("/api") || pathname.startsWith("/_next")) {
+  // 정적 파일은 통과
+  if (pathname.startsWith("/_next")) {
+    return NextResponse.next();
+  }
+
+  // 인증 관련 API는 공개
+  if (pathname.startsWith("/api/auth/")) {
+    return NextResponse.next();
+  }
+
+  // 그 외 API는 세션 쿠키 필수
+  if (pathname.startsWith("/api")) {
+    const session = request.cookies.get("session");
+    if (!session) {
+      return NextResponse.json(
+        { error: "인증이 필요합니다." },
+        { status: 401 },
+      );
+    }
     return NextResponse.next();
   }
 

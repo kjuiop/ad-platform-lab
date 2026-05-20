@@ -1,9 +1,10 @@
 import { User } from "@/types/auth";
 
-export const mockUsers: { email: string; password: string; user: User }[] = [
+export const mockUsers: { email: string; password: string; phone: string; user: User }[] = [
   {
     email: "admin@giglab.org",
     password: "admin1234",
+    phone: "010-1111-1111",
     user: {
       id: 1,
       email: "admin@giglab.org",
@@ -16,6 +17,7 @@ export const mockUsers: { email: string; password: string; user: User }[] = [
   {
     email: "partner@abc.com",
     password: "partner1234",
+    phone: "010-2222-2222",
     user: {
       id: 2,
       email: "partner@abc.com",
@@ -28,6 +30,7 @@ export const mockUsers: { email: string; password: string; user: User }[] = [
   {
     email: "brand@nike.com",
     password: "brand1234",
+    phone: "010-3333-3333",
     user: {
       id: 3,
       email: "brand@nike.com",

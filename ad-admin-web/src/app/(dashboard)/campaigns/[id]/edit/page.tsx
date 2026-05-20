@@ -19,13 +19,17 @@ export default function EditCampaignPage() {
 
   useEffect(() => {
     fetch(`/api/campaigns/${params.id}`)
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) throw new Error(`데이터를 불러오지 못했습니다. (${res.status})`);
+        return res.json();
+      })
       .then((data: Campaign) => {
         setName(data.name);
         setStartDate(data.startDate ?? "");
         setEndDate(data.endDate ?? "");
-        setLoading(false);
-      });
+      })
+      .catch((err) => setError(err.message))
+      .finally(() => setLoading(false));
   }, [params.id]);
 
   async function handleSubmit(e: React.FormEvent) {

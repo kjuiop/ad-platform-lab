@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 const publicPaths = ["/login", "/signup", "/find-account", "/find-password"];
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // API, 정적 파일은 통과

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { campaigns } from "@/lib/mock-store";
+import { campaigns, adGroups, creatives } from "@/lib/mock-store";
 
 export async function GET(
   _request: NextRequest,
@@ -43,6 +43,17 @@ export async function DELETE(
   if (!campaigns.has(Number(id))) {
     return NextResponse.json({ error: "Not found" }, { status: 404 });
   }
-  campaigns.delete(Number(id));
+  const campaignId = Number(id);
+  const childAdGroupIds: number[] = [];
+  for (const [agId, ag] of adGroups) {
+    if (ag.campaignId === campaignId) childAdGroupIds.push(agId);
+  }
+  for (const [crId, cr] of creatives) {
+    if (childAdGroupIds.includes(cr.adGroupId)) creatives.delete(crId);
+  }
+  for (const agId of childAdGroupIds) {
+    adGroups.delete(agId);
+  }
+  campaigns.delete(campaignId);
   return new NextResponse(null, { status: 204 });
 }

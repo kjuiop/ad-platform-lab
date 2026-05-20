@@ -31,9 +31,15 @@ export async function POST(
     return NextResponse.json({ error: "Campaign not found" }, { status: 404 });
   }
   const body = await request.json();
-  if (!body.name || !body.bidType || body.bidAmount == null) {
+  const validBidTypes = ["CPC", "CPM"];
+  if (
+    !body.name ||
+    !validBidTypes.includes(body.bidType) ||
+    !Number.isFinite(body.bidAmount) ||
+    body.bidAmount <= 0
+  ) {
     return NextResponse.json(
-      { error: "name, bidType, bidAmount는 필수입니다." },
+      { error: "name은 필수, bidType은 CPC/CPM, bidAmount는 0보다 큰 숫자여야 합니다." },
       { status: 400 },
     );
   }

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { getAppUrl } from "@/lib/api";
 import { Campaign } from "@/types/ad";
 import { StatusBadge } from "@/components/StatusBadge";
 import { buttonVariants } from "@/components/ui/button";
@@ -12,7 +13,7 @@ import {
 } from "@/components/ui/table";
 
 async function getCampaigns(): Promise<Campaign[]> {
-  const res = await fetch("http://localhost:3001/api/campaigns", {
+  const res = await fetch(`${getAppUrl()}/api/campaigns`, {
     cache: "no-store",
   });
   return res.json();

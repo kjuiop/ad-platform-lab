@@ -15,6 +15,23 @@ export async function POST(request: NextRequest) {
       { status: 400 },
     );
   }
+  const isoDateRegex = /^\d{4}-\d{2}-\d{2}$/;
+  for (const field of ["startDate", "endDate"] as const) {
+    if (body[field] != null) {
+      if (!isoDateRegex.test(body[field]) || isNaN(Date.parse(body[field]))) {
+        return NextResponse.json(
+          { error: `${field}은(는) YYYY-MM-DD 형식이어야 합니다.` },
+          { status: 400 },
+        );
+      }
+    }
+  }
+  if (body.startDate && body.endDate && body.startDate > body.endDate) {
+    return NextResponse.json(
+      { error: "startDate는 endDate보다 이전이어야 합니다." },
+      { status: 400 },
+    );
+  }
   const id = nextCampaignId();
   const campaign: Campaign = {
     id,

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { getAppUrl } from "@/lib/api";
 import { AdGroup, Creative } from "@/types/ad";
 import { StatusBadge } from "@/components/StatusBadge";
 import { StatusActions } from "@/components/StatusActions";
@@ -16,7 +17,7 @@ import {
 
 async function getAdGroup(adGroupId: string): Promise<AdGroup> {
   const res = await fetch(
-    `http://localhost:3001/api/ad-groups/${adGroupId}`,
+    `${getAppUrl()}/api/ad-groups/${adGroupId}`,
     { cache: "no-store" },
   );
   if (!res.ok) throw new Error("AdGroup not found");
@@ -25,7 +26,7 @@ async function getAdGroup(adGroupId: string): Promise<AdGroup> {
 
 async function getCreatives(adGroupId: string): Promise<Creative[]> {
   const res = await fetch(
-    `http://localhost:3001/api/ad-groups/${adGroupId}/creatives`,
+    `${getAppUrl()}/api/ad-groups/${adGroupId}/creatives`,
     { cache: "no-store" },
   );
   return res.json();

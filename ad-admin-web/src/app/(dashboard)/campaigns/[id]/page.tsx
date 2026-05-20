@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { getAppUrl } from "@/lib/api";
 import { Campaign, AdGroup } from "@/types/ad";
 import { StatusBadge } from "@/components/StatusBadge";
 import { StatusActions } from "@/components/StatusActions";
@@ -15,7 +16,7 @@ import {
 } from "@/components/ui/table";
 
 async function getCampaign(id: string): Promise<Campaign> {
-  const res = await fetch(`http://localhost:3001/api/campaigns/${id}`, {
+  const res = await fetch(`${getAppUrl()}/api/campaigns/${id}`, {
     cache: "no-store",
   });
   if (!res.ok) throw new Error("Campaign not found");
@@ -24,7 +25,7 @@ async function getCampaign(id: string): Promise<Campaign> {
 
 async function getAdGroups(campaignId: string): Promise<AdGroup[]> {
   const res = await fetch(
-    `http://localhost:3001/api/campaigns/${campaignId}/ad-groups`,
+    `${getAppUrl()}/api/campaigns/${campaignId}/ad-groups`,
     { cache: "no-store" },
   );
   return res.json();

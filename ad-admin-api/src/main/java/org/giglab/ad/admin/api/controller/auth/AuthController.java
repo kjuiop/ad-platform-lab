@@ -25,5 +25,4 @@ public class AuthController {
     SignupResponse response = authFacade.adminSignUp(request);
     return ResponseEntity.status(HttpStatus.CREATED).body(response);
   }
-
 }

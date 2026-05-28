@@ -40,14 +40,7 @@ public class Admin extends AuditedEntity {
   @Column(nullable = false)
   private AdminRole role;
 
-  private Admin(String email, String name, String password, AdminRole role) {
-    this.email = email;
-    this.name = name;
-    this.password = password;
-    this.role = role;
-  }
-
   public static Admin create(String email, String name, String password, AdminRole role) {
-    return new Admin(email, name, password, role);
+    return Admin.builder().email(email).name(name).password(password).role(role).build();
   }
 }

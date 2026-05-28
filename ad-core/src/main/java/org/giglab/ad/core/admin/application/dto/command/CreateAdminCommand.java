@@ -5,7 +5,7 @@ import org.giglab.ad.core.admin.domain.exception.AdminErrorCode;
 
 public record CreateAdminCommand(String email, String name, String password) {
   public CreateAdminCommand {
-    if (password != null && password.length() < 8) {
+    if (password == null || password.length() < 8) {
       throw new AdminDomainException(AdminErrorCode.INVALID_PASSWORD);
     }
   }

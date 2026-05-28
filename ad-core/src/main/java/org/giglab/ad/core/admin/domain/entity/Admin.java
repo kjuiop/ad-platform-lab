@@ -18,6 +18,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.giglab.ad.core.admin.domain.entity.types.AdminStatus;
 import org.giglab.ad.core.global.jpa.entity.AuditedEntity;
 import org.giglab.ad.core.global.jpa.entity.types.YnType;
 
@@ -42,6 +43,11 @@ public class Admin extends AuditedEntity {
   @Enumerated(EnumType.STRING)
   private YnType deleteYn = YnType.N;
 
+  @Builder.Default
+  @Column(length = 50)
+  @Enumerated(EnumType.STRING)
+  private AdminStatus status = AdminStatus.PENDING;
+
   @Column(nullable = false)
   private String name;
 
@@ -57,7 +63,12 @@ public class Admin extends AuditedEntity {
 
   /** 관리자를 생성한다. */
   public static Admin create(String email, String name, String password) {
-    return Admin.builder().email(email).name(name).password(password).build();
+    return Admin.builder()
+        .email(email)
+        .name(name)
+        .password(password)
+        .status(AdminStatus.PENDING)
+        .build();
   }
 
   /** 역할을 추가한다. */

@@ -13,7 +13,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.giglab.ad.core.global.config.jpa.entity.AuditedEntity;
+import org.giglab.ad.core.global.jpa.entity.AuditedEntity;
+import org.giglab.ad.core.global.jpa.entity.types.YnType;
 
 @Getter
 @Builder
@@ -29,6 +30,11 @@ public class Admin extends AuditedEntity {
 
   @Column(nullable = false, unique = true)
   private String email;
+
+  @Builder.Default
+  @Column(columnDefinition = "varchar(2) default 'N'", nullable = false)
+  @Enumerated(EnumType.STRING)
+  private YnType deleteYn = YnType.N;
 
   @Column(nullable = false)
   private String name;

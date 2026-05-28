@@ -1,4 +1,4 @@
-package org.giglab.ad.core.global.config.jpa.entity.types;
+package org.giglab.ad.core.global.jpa.entity.types;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

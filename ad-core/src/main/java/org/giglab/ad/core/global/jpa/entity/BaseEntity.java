@@ -1,4 +1,4 @@
-package org.giglab.ad.core.global.config.jpa.entity;
+package org.giglab.ad.core.global.jpa.entity;
 
 import java.time.LocalDateTime;
 

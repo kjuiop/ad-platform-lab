@@ -1,4 +1,4 @@
-package org.giglab.ad.core.global.config.jpa.entity;
+package org.giglab.ad.core.global.jpa.entity;
 
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;

@@ -1,4 +1,4 @@
-package org.giglab.ad.core.global.config.jpa;
+package org.giglab.ad.core.global.config;
 
 import java.util.Optional;
 import org.springframework.boot.persistence.autoconfigure.EntityScan;

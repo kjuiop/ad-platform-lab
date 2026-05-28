@@ -8,6 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,7 +33,7 @@ public class MenuRole extends AuditedEntity {
   @JoinColumn(name = "menu_id", nullable = false)
   private Menu menu;
 
-  private String role;
+  @NotNull private String role;
 
   /** 메뉴와 역할로 MenuRole을 생성한다. */
   public static MenuRole of(Menu menu, String role) {

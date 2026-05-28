@@ -31,9 +31,11 @@ class AdminServiceTest {
   @DisplayName("createAdmin 호출 시 CreateAdminUseCase.execute()에 command를 위임한다")
   void createAdmin_delegatesToUseCase() {
     // given
-    CreateAdminCommand command = new CreateAdminCommand("admin@example.com", "홍길동", "password123");
+    CreateAdminCommand command =
+        new CreateAdminCommand("admin@example.com", "홍길동", "password123", "ROLE_ADMINISTRATOR");
     CreateAdminResult expected =
-        new CreateAdminResult(1L, "admin@example.com", "홍길동", "ADMINISTRATOR", LocalDateTime.now());
+        new CreateAdminResult(
+            1L, "admin@example.com", "홍길동", "ROLE_ADMINISTRATOR", LocalDateTime.now());
     given(createAdminUseCase.execute(command)).willReturn(expected);
 
     // when
@@ -48,7 +50,8 @@ class AdminServiceTest {
   @DisplayName("useCase에서 AdminDomainException이 발생하면 서비스가 그대로 전파한다")
   void createAdmin_propagatesAdminDomainException() {
     // given
-    CreateAdminCommand command = new CreateAdminCommand("dup@example.com", "홍길동", "password123");
+    CreateAdminCommand command =
+        new CreateAdminCommand("dup@example.com", "홍길동", "password123", "ROLE_ADMINISTRATOR");
     given(createAdminUseCase.execute(any()))
         .willThrow(new AdminDomainException(AdminErrorCode.DUPLICATE_EMAIL));
 
@@ -62,10 +65,11 @@ class AdminServiceTest {
   @DisplayName("createAdmin은 useCase가 반환한 결과를 그대로 반환한다")
   void createAdmin_returnsUseCaseResult() {
     // given
-    CreateAdminCommand command = new CreateAdminCommand("admin@example.com", "홍길동", "password123");
+    CreateAdminCommand command =
+        new CreateAdminCommand("admin@example.com", "홍길동", "password123", "ROLE_ADMINISTRATOR");
     LocalDateTime now = LocalDateTime.now();
     CreateAdminResult expected =
-        new CreateAdminResult(42L, "admin@example.com", "홍길동", "ADMINISTRATOR", now);
+        new CreateAdminResult(42L, "admin@example.com", "홍길동", "ROLE_ADMINISTRATOR", now);
     given(createAdminUseCase.execute(command)).willReturn(expected);
 
     // when
@@ -75,7 +79,7 @@ class AdminServiceTest {
     assertThat(result.id()).isEqualTo(42L);
     assertThat(result.email()).isEqualTo("admin@example.com");
     assertThat(result.name()).isEqualTo("홍길동");
-    assertThat(result.role()).isEqualTo("ADMINISTRATOR");
+    assertThat(result.role()).isEqualTo("ROLE_ADMINISTRATOR");
     assertThat(result.createdAt()).isEqualTo(now);
   }
 }

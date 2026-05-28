@@ -33,7 +33,8 @@ class AuthControllerTest {
   void signup_success() throws Exception {
     String requestBody =
         """
-        {"name": "홍길동", "email": "test@example.com", "password": "password123"}
+        {"name": "홍길동", "email": "test@example.com", \
+        "password": "password123", "role": "ROLE_ADMINISTRATOR"}
         """;
 
     mockMvc
@@ -43,7 +44,7 @@ class AuthControllerTest {
         .andExpect(jsonPath("$.id").isNumber())
         .andExpect(jsonPath("$.email").value("test@example.com"))
         .andExpect(jsonPath("$.name").value("홍길동"))
-        .andExpect(jsonPath("$.role").value("ADMINISTRATOR"))
+        .andExpect(jsonPath("$.role").value("ROLE_ADMINISTRATOR"))
         .andExpect(jsonPath("$.createdAt").exists());
   }
 
@@ -52,7 +53,8 @@ class AuthControllerTest {
   void signup_duplicateEmail() throws Exception {
     String requestBody =
         """
-        {"name": "테스트", "email": "dup@example.com", "password": "password123"}
+        {"name": "테스트", "email": "dup@example.com", \
+        "password": "password123", "role": "ROLE_ADMINISTRATOR"}
         """;
 
     mockMvc

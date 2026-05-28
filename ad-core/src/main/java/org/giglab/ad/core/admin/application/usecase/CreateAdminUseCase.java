@@ -26,20 +26,12 @@ public class CreateAdminUseCase {
     if (adminStorePort.existsByEmail(command.email())) {
       throw new AdminDomainException(AdminErrorCode.DUPLICATE_EMAIL);
     }
-    AdminRole role;
-    try {
-      role = AdminRole.valueOf(command.role());
-    } catch (IllegalArgumentException e) {
-      throw new AdminDomainException(AdminErrorCode.INVALID_ROLE);
-    }
     String encodedPassword = passwordEncoder.encode(command.password());
-    Admin admin = Admin.create(command.email(), command.name(), encodedPassword, role);
+    Admin admin = Admin.create(command.email(), command.name(), encodedPassword);
     Admin saved = adminStorePort.store(admin);
+    AdminRole adminRole = AdminRole.of(saved, command.role());
+    saved.addRole(adminRole);
     return new CreateAdminResult(
-        saved.getId(),
-        saved.getEmail(),
-        saved.getName(),
-        saved.getRole().name(),
-        saved.getCreatedAt());
+        saved.getId(), saved.getEmail(), saved.getName(), command.role(), saved.getCreatedAt());
   }
 }

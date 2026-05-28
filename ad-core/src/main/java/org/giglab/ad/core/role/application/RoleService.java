@@ -4,8 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.giglab.ad.core.role.application.port.RoleLoadPort;
 import org.giglab.ad.core.role.application.port.RoleStorePort;
 import org.giglab.ad.core.role.domain.entity.Role;
-import org.giglab.ad.core.role.domain.exception.RoleDomainException;
-import org.giglab.ad.core.role.domain.exception.RoleErrorCode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,12 +21,5 @@ public class RoleService {
     return roleLoadPort
         .findByName(name)
         .orElseGet(() -> roleStorePort.store(Role.createRole(name, description, sortOrder)));
-  }
-
-  /** 이름으로 역할을 조회한다. 없으면 예외를 던진다. */
-  public Role findByName(String name) {
-    return roleLoadPort
-        .findByName(name)
-        .orElseThrow(() -> new RoleDomainException(RoleErrorCode.ROLE_NOT_FOUND));
   }
 }

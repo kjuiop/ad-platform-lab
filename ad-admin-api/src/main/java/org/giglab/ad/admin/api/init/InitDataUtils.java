@@ -3,11 +3,10 @@ package org.giglab.ad.admin.api.init;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.giglab.ad.core.admin.application.AdminService;
-import org.giglab.ad.core.admin.domain.entity.AdminRole;
+import org.giglab.ad.core.admin.application.dto.command.CreateAdminCommand;
 import org.giglab.ad.core.menu.application.MenuService;
 import org.giglab.ad.core.menu.domain.entity.Menu;
 import org.giglab.ad.core.role.application.RoleService;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,7 +18,6 @@ public class InitDataUtils {
   private final RoleService roleService;
   private final MenuService menuService;
   private final AdminService adminService;
-  private final PasswordEncoder passwordEncoder;
 
   /** 역할, 메뉴, 관리자 초기 데이터를 생성한다. */
   @Transactional
@@ -49,7 +47,7 @@ public class InitDataUtils {
   }
 
   private void initAdmins() {
-    adminService.initAdmin(
-        "admin@giglab.org", passwordEncoder.encode("admin1234!"), "초기관리자", AdminRole.ADMINISTRATOR);
+    adminService.createAdmin(
+        new CreateAdminCommand("admin@giglab.org", "admin1234!", "초기관리자", "ROLE_ADMINISTRATOR"));
   }
 }

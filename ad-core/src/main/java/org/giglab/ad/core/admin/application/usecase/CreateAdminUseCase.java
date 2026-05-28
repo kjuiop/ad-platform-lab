@@ -3,6 +3,7 @@ package org.giglab.ad.core.admin.application.usecase;
 import lombok.RequiredArgsConstructor;
 import org.giglab.ad.core.admin.application.dto.command.CreateAdminCommand;
 import org.giglab.ad.core.admin.application.dto.command.CreateAdminResult;
+import org.giglab.ad.core.admin.application.port.AdminQueryPort;
 import org.giglab.ad.core.admin.application.port.AdminStorePort;
 import org.giglab.ad.core.admin.domain.entity.Admin;
 import org.giglab.ad.core.admin.domain.exception.AdminDomainException;
@@ -18,11 +19,12 @@ import org.springframework.transaction.annotation.Transactional;
 public class CreateAdminUseCase {
 
   private final PasswordEncoder passwordEncoder;
+  private final AdminQueryPort adminQueryPort;
   private final AdminStorePort adminStorePort;
 
   /** 관리자 생성 커맨드를 실행한다. */
   public CreateAdminResult execute(CreateAdminCommand command) {
-    if (adminStorePort.existsByEmail(command.email())) {
+    if (adminQueryPort.existsByEmail(command.email())) {
       throw new AdminDomainException(AdminErrorCode.DUPLICATE_EMAIL);
     }
     String encodedPassword = passwordEncoder.encode(command.password());

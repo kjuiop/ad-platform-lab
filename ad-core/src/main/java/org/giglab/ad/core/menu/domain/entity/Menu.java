@@ -98,4 +98,9 @@ public class Menu extends AuditedEntity {
     this.parent = parent;
     parent.children.add(this);
   }
+
+  /** 역할을 추가한다. */
+  public void addRole(String roleName) {
+    this.menuRoles.add(MenuRole.of(this, roleName));
+  }
 }

@@ -3,6 +3,7 @@ package org.giglab.ad.core.admin.domain.entity.types;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+/** 관리자 상태 타입. */
 @Getter
 @AllArgsConstructor
 public enum AdminStatus {

@@ -9,13 +9,16 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "잘못된 요청 형식입니다." }, { status: 400 });
   }
 
-  const { name, email, password } = body as {
-    name?: string;
-    email?: string;
-    password?: string;
-  };
+  const { name, email, password } = body as Record<string, unknown>;
 
-  if (!name || !email || !password) {
+  if (
+    typeof name !== "string" ||
+    !name.trim() ||
+    typeof email !== "string" ||
+    !email.trim() ||
+    typeof password !== "string" ||
+    !password.trim()
+  ) {
     return NextResponse.json(
       { error: "모든 항목을 입력해주세요." },
       { status: 400 },

@@ -3,7 +3,6 @@ package org.giglab.ad.core.admin.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.giglab.ad.core.admin.domain.entity.Admin;
-import org.giglab.ad.core.admin.domain.entity.AdminRole;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,35 +12,37 @@ class AdminTest {
   @Test
   @DisplayName("정적 팩터리 메서드로 Admin을 생성하면 전달한 값이 그대로 저장된다")
   void create_setsFieldsCorrectly() {
-    Admin admin = Admin.create("admin@example.com", "홍길동", "encodedPw", AdminRole.ADMINISTRATOR);
+    Admin admin = Admin.create("admin@example.com", "홍길동", "encodedPw");
 
     assertThat(admin.getEmail()).isEqualTo("admin@example.com");
     assertThat(admin.getName()).isEqualTo("홍길동");
     assertThat(admin.getPassword()).isEqualTo("encodedPw");
-    assertThat(admin.getRole()).isEqualTo(AdminRole.ADMINISTRATOR);
   }
 
   @Test
   @DisplayName("새로 생성된 Admin의 id는 null이다 (영속화 전)")
   void create_idIsNullBeforePersist() {
-    Admin admin = Admin.create("admin@example.com", "홍길동", "encodedPw", AdminRole.ADMINISTRATOR);
+    Admin admin = Admin.create("admin@example.com", "홍길동", "encodedPw");
 
     assertThat(admin.getId()).isNull();
   }
 
   @Test
-  @DisplayName("PARTNER_ADMIN 역할로 Admin을 생성할 수 있다")
-  void create_withPartnerAdminRole() {
-    Admin admin = Admin.create("partner@example.com", "파트너", "encodedPw", AdminRole.PARTNER_ADMIN);
+  @DisplayName("새로 생성된 Admin의 roles는 비어 있다")
+  void create_rolesIsEmptyBeforeAddRole() {
+    Admin admin = Admin.create("admin@example.com", "홍길동", "encodedPw");
 
-    assertThat(admin.getRole()).isEqualTo(AdminRole.PARTNER_ADMIN);
+    assertThat(admin.getRoles()).isEmpty();
   }
 
   @Test
-  @DisplayName("BRAND_ADMIN 역할로 Admin을 생성할 수 있다")
-  void create_withBrandAdminRole() {
-    Admin admin = Admin.create("brand@example.com", "브랜드", "encodedPw", AdminRole.BRAND_ADMIN);
+  @DisplayName("addRole로 역할을 추가하면 roles 목록에 포함된다")
+  void addRole_addsToRolesList() {
+    Admin admin = Admin.create("admin@example.com", "홍길동", "encodedPw");
 
-    assertThat(admin.getRole()).isEqualTo(AdminRole.BRAND_ADMIN);
+    admin.addRole("ROLE_ADMINISTRATOR");
+
+    assertThat(admin.getRoles()).hasSize(1);
+    assertThat(admin.getRoles().get(0).getRole()).isEqualTo("ROLE_ADMINISTRATOR");
   }
 }

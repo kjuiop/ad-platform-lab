@@ -10,6 +10,7 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+/** JPA 감사(Auditing) 기반 엔티티. */
 @Getter
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)

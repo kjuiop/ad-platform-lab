@@ -3,6 +3,7 @@ package org.giglab.ad.admin.api.controller.exception;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+/** 공통 에러 코드. */
 @Getter
 @RequiredArgsConstructor
 public enum CommonErrorCode {

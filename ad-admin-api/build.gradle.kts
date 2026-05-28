@@ -10,6 +10,9 @@ dependencies {
     // spring boot
     implementation("org.springframework.boot:spring-boot-starter-web")
 
+    // security
+    implementation("org.springframework.security:spring-security-crypto")
+
 
     // swagger
     implementation("io.swagger.core.v3:swagger-annotations:2.2.20")

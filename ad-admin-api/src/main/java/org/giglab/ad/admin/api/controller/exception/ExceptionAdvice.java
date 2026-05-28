@@ -17,10 +17,12 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+/** 전역 예외 처리 어드바이스. */
 @Slf4j
 @RestControllerAdvice
 public class ExceptionAdvice {
 
+  /** 도메인 예외를 처리한다. */
   @ExceptionHandler(DomainException.class)
   public ResponseEntity<ApiResponse<Void>> handleDomainException(DomainException ex) {
     DomainErrorCode errorCode = ex.getErrorCode();
@@ -30,6 +32,7 @@ public class ExceptionAdvice {
         .body(ApiResponse.error(errorCode.getCode(), errorCode.getMessage()));
   }
 
+  /** Bean Validation 실패 예외를 처리한다. */
   @ExceptionHandler(MethodArgumentNotValidException.class)
   public ResponseEntity<ApiResponse<Void>> handleMethodArgumentNotValid(
       MethodArgumentNotValidException ex) {
@@ -45,6 +48,7 @@ public class ExceptionAdvice {
         .body(ApiResponse.error(INVALID_REQUEST.getCode(), message));
   }
 
+  /** 제약 조건 위반 예외를 처리한다. */
   @ExceptionHandler(ConstraintViolationException.class)
   public ResponseEntity<ApiResponse<Void>> handleConstraintViolation(
       ConstraintViolationException ex) {
@@ -60,6 +64,7 @@ public class ExceptionAdvice {
         .body(ApiResponse.error(INVALID_REQUEST.getCode(), message));
   }
 
+  /** HTTP 메시지 파싱 불가 예외를 처리한다. */
   @ExceptionHandler(HttpMessageNotReadableException.class)
   public ResponseEntity<ApiResponse<Void>> handleHttpMessageNotReadable(
       HttpMessageNotReadableException ex) {
@@ -67,6 +72,7 @@ public class ExceptionAdvice {
         .body(ApiResponse.error(INVALID_REQUEST.getCode(), INVALID_REQUEST.getMessage()));
   }
 
+  /** 예상치 못한 예외를 처리한다. */
   @ExceptionHandler(Exception.class)
   public ResponseEntity<ApiResponse<Void>> handleUnexpected(Exception ex) {
     log.error("Unexpected exception occurred.", ex);

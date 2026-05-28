@@ -9,6 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,7 +20,9 @@ import lombok.NoArgsConstructor;
 @Getter
 @Builder
 @Entity
-@Table(name = "administrator_roles")
+@Table(
+    name = "administrator_roles",
+    uniqueConstraints = @UniqueConstraint(columnNames = {"admin_id", "role"}))
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public class AdminRole {

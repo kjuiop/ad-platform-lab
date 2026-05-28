@@ -39,6 +39,7 @@ public class Menu extends AuditedEntity {
   @Column(nullable = false)
   private String name;
 
+  @Column(nullable = false, unique = true)
   private String url;
 
   @Builder.Default

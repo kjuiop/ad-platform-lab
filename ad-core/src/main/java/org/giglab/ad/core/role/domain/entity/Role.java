@@ -22,7 +22,7 @@ import org.giglab.ad.core.role.domain.exception.RoleErrorCode;
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public class Role extends AuditedEntity {
 
-  private static final String rolePrefix = "ROLE_";
+  private static final String ROLE_PREFIX = "ROLE_";
 
   @Id
   @Column(nullable = false, unique = true)
@@ -35,7 +35,7 @@ public class Role extends AuditedEntity {
 
   /** 역할을 생성한다. */
   public static Role createRole(String name, String description, int sortOrder) {
-    if (!name.startsWith(rolePrefix)) {
+    if (!name.startsWith(ROLE_PREFIX)) {
       throw new RoleDomainException(RoleErrorCode.INVALID_ROLE_NAME);
     }
     return Role.builder().name(name).description(description).sortOrder(sortOrder).build();

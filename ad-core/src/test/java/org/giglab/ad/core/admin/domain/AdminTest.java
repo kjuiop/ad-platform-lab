@@ -22,15 +22,6 @@ class AdminTest {
   }
 
   @Test
-  @DisplayName("Admin 생성 시 createdAt, updatedAt이 null이 아니다")
-  void create_timestampsAreNotNull() {
-    Admin admin = Admin.create("admin@example.com", "홍길동", "encodedPw", AdminRole.ADMINISTRATOR);
-
-    assertThat(admin.getCreatedAt()).isNotNull();
-    assertThat(admin.getUpdatedAt()).isNotNull();
-  }
-
-  @Test
   @DisplayName("새로 생성된 Admin의 id는 null이다 (영속화 전)")
   void create_idIsNullBeforePersist() {
     Admin admin = Admin.create("admin@example.com", "홍길동", "encodedPw", AdminRole.ADMINISTRATOR);

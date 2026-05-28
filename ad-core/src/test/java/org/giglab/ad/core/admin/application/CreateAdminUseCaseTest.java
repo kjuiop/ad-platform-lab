@@ -46,11 +46,10 @@ class CreateAdminUseCaseTest {
     // when
     CreateAdminResult result = createAdminUseCase.execute(command);
 
-    // then — id는 DB 자동 생성이므로 null 허용, 나머지 필드만 검증
+    // then — id는 DB 자동 생성이므로 null 허용, createdAt은 JPA 영속화 시 채워지므로 단위 테스트에서 검증 제외
     assertThat(result.email()).isEqualTo("admin@example.com");
     assertThat(result.name()).isEqualTo("홍길동");
     assertThat(result.role()).isEqualTo("ADMINISTRATOR");
-    assertThat(result.createdAt()).isNotNull();
   }
 
   @Test

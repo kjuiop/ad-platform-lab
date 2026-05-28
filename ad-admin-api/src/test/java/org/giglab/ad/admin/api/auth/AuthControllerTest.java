@@ -32,10 +32,12 @@ class AuthControllerTest {
   @DisplayName("정상적인 회원가입 요청 시 201 Created 응답")
   void signup_success() throws Exception {
     String requestBody =
-        """
-        {"name": "홍길동", "email": "test@example.com", \
-        "password": "password123", "role": "ROLE_ADMINISTRATOR"}
-        """;
+        "{"
+            + "\"name\": \"홍길동\","
+            + "\"email\": \"test@example.com\","
+            + "\"password\": \"password123\","
+            + "\"role\": \"ROLE_ADMINISTRATOR\""
+            + "}";
 
     mockMvc
         .perform(
@@ -52,10 +54,12 @@ class AuthControllerTest {
   @DisplayName("이메일이 중복되면 409 Conflict 응답")
   void signup_duplicateEmail() throws Exception {
     String requestBody =
-        """
-        {"name": "테스트", "email": "dup@example.com", \
-        "password": "password123", "role": "ROLE_ADMINISTRATOR"}
-        """;
+        "{"
+            + "\"name\": \"테스트\","
+            + "\"email\": \"dup@example.com\","
+            + "\"password\": \"password123\","
+            + "\"role\": \"ROLE_ADMINISTRATOR\""
+            + "}";
 
     mockMvc
         .perform(

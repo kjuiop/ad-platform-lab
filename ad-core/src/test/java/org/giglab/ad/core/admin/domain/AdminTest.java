@@ -3,7 +3,6 @@ package org.giglab.ad.core.admin.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.giglab.ad.core.admin.domain.entity.Admin;
-import org.giglab.ad.core.admin.domain.entity.AdminRole;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -40,9 +39,8 @@ class AdminTest {
   @DisplayName("addRole로 역할을 추가하면 roles 목록에 포함된다")
   void addRole_addsToRolesList() {
     Admin admin = Admin.create("admin@example.com", "홍길동", "encodedPw");
-    AdminRole role = AdminRole.of(admin, "ROLE_ADMINISTRATOR");
 
-    admin.addRole(role);
+    admin.addRole("ROLE_ADMINISTRATOR");
 
     assertThat(admin.getRoles()).hasSize(1);
     assertThat(admin.getRoles().get(0).getRole()).isEqualTo("ROLE_ADMINISTRATOR");

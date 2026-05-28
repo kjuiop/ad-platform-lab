@@ -61,7 +61,7 @@ public class Admin extends AuditedEntity {
   }
 
   /** 역할을 추가한다. */
-  public void addRole(AdminRole role) {
-    this.roles.add(role);
+  public void addRole(String roleName) {
+    this.roles.add(AdminRole.of(this, roleName));
   }
 }

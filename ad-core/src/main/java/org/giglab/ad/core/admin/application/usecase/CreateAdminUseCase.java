@@ -5,7 +5,6 @@ import org.giglab.ad.core.admin.application.dto.command.CreateAdminCommand;
 import org.giglab.ad.core.admin.application.dto.command.CreateAdminResult;
 import org.giglab.ad.core.admin.application.port.AdminStorePort;
 import org.giglab.ad.core.admin.domain.entity.Admin;
-import org.giglab.ad.core.admin.domain.entity.AdminRole;
 import org.giglab.ad.core.admin.domain.exception.AdminDomainException;
 import org.giglab.ad.core.admin.domain.exception.AdminErrorCode;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -28,9 +27,8 @@ public class CreateAdminUseCase {
     }
     String encodedPassword = passwordEncoder.encode(command.password());
     Admin admin = Admin.create(command.email(), command.name(), encodedPassword);
+    admin.addRole(command.role());
     Admin saved = adminStorePort.store(admin);
-    AdminRole adminRole = AdminRole.of(saved, command.role());
-    saved.addRole(adminRole);
     return new CreateAdminResult(
         saved.getId(), saved.getEmail(), saved.getName(), command.role(), saved.getCreatedAt());
   }

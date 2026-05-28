@@ -1,8 +1,6 @@
 package org.giglab.ad.core.role.infrastructure.adapter;
 
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
-import org.giglab.ad.core.role.application.port.RoleLoadPort;
 import org.giglab.ad.core.role.application.port.RoleStorePort;
 import org.giglab.ad.core.role.domain.entity.Role;
 import org.giglab.ad.core.role.infrastructure.persistence.RoleRepository;
@@ -12,7 +10,7 @@ import org.springframework.stereotype.Component;
 /** JPA 기반 역할 어댑터. */
 @Component
 @RequiredArgsConstructor
-public class JpaRoleAdapter implements RoleStorePort, RoleLoadPort {
+public class JpaRoleStoreAdapter implements RoleStorePort {
 
   private final RoleRepository roleRepository;
 
@@ -23,10 +21,5 @@ public class JpaRoleAdapter implements RoleStorePort, RoleLoadPort {
     } catch (DataIntegrityViolationException e) {
       return role;
     }
-  }
-
-  @Override
-  public Optional<Role> findByName(String name) {
-    return roleRepository.findById(name);
   }
 }

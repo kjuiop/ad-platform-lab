@@ -32,6 +32,14 @@ export async function POST(request: NextRequest) {
     );
   }
 
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    return NextResponse.json(
+      { error: "올바른 이메일 형식이 아닙니다." },
+      { status: 400 },
+    );
+  }
+
   try {
     const res = await fetch(`${getBackendUrl()}/api/auth/signup`, {
       method: "POST",

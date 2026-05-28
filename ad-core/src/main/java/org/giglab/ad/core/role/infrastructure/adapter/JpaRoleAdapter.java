@@ -6,6 +6,7 @@ import org.giglab.ad.core.role.application.port.RoleLoadPort;
 import org.giglab.ad.core.role.application.port.RoleStorePort;
 import org.giglab.ad.core.role.domain.entity.Role;
 import org.giglab.ad.core.role.infrastructure.persistence.RoleRepository;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Component;
 
 /** JPA 기반 역할 어댑터. */
@@ -17,7 +18,11 @@ public class JpaRoleAdapter implements RoleStorePort, RoleLoadPort {
 
   @Override
   public Role store(Role role) {
-    return roleRepository.save(role);
+    try {
+      return roleRepository.save(role);
+    } catch (DataIntegrityViolationException e) {
+      return role;
+    }
   }
 
   @Override

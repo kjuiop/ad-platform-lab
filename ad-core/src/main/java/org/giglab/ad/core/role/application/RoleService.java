@@ -12,7 +12,7 @@ public class RoleService {
 
   private final CreateRoleUseCase createRoleUseCase;
 
-  /** 역할을 초기화한다. 이미 존재하면 기존 역할을 반환한다. */
+  /** 역할을 초기화한다. 이미 존재하면 생성하지 않는다. */
   public void initRole(String name, String description, int sortOrder) {
     createRoleUseCase.execute(new CreateRoleCommand(name, description, sortOrder));
   }

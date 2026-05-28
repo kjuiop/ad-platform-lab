@@ -6,6 +6,7 @@ import org.giglab.ad.core.menu.application.port.MenuLoadPort;
 import org.giglab.ad.core.menu.application.port.MenuStorePort;
 import org.giglab.ad.core.menu.domain.entity.Menu;
 import org.giglab.ad.core.menu.domain.entity.MenuRole;
+import org.giglab.ad.core.shared.role.RoleType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,7 +28,13 @@ public class MenuService {
               Menu menu =
                   menuStorePort.store(
                       Menu.builder().name(name).url(url).sortOrder(sortOrder).build());
-              roleNames.forEach(role -> menuStorePort.storeMenuRole(MenuRole.of(menu, role)));
+              roleNames.forEach(
+                  role -> {
+                    if (!RoleType.isValid(role)) {
+                      throw new IllegalArgumentException("지원하지 않는 역할입니다: " + role);
+                    }
+                    menuStorePort.storeMenuRole(MenuRole.of(menu, role));
+                  });
               return menu;
             });
   }
@@ -43,7 +50,13 @@ public class MenuService {
               Menu child = Menu.builder().name(name).url(url).sortOrder(sortOrder).build();
               child.attachParent(parent);
               Menu saved = menuStorePort.store(child);
-              roleNames.forEach(role -> menuStorePort.storeMenuRole(MenuRole.of(saved, role)));
+              roleNames.forEach(
+                  role -> {
+                    if (!RoleType.isValid(role)) {
+                      throw new IllegalArgumentException("지원하지 않는 역할입니다: " + role);
+                    }
+                    menuStorePort.storeMenuRole(MenuRole.of(saved, role));
+                  });
               return saved;
             });
   }

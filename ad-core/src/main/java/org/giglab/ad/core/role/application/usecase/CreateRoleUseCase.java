@@ -1,6 +1,5 @@
 package org.giglab.ad.core.role.application.usecase;
 
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.giglab.ad.core.role.application.dto.command.CreateRoleCommand;
 import org.giglab.ad.core.role.application.port.RoleLoadPort;
@@ -18,12 +17,12 @@ public class CreateRoleUseCase {
   private final RoleLoadPort roleLoadPort;
   private final RoleStorePort roleStorePort;
 
-  /** 역할 생성 커맨드를 실행한다. 이미 존재하면 기존 역할을 반환한다. */
+  /** 역할 생성 커맨드를 실행한다. 이미 존재하면 생성하지 않는다. */
   public void execute(CreateRoleCommand command) {
-    Optional<Role> findRole = roleLoadPort.findByName(command.name());
-    findRole.orElseGet(
-        () ->
-            roleStorePort.store(
-                Role.createRole(command.name(), command.description(), command.sortOrder())));
+    if (roleLoadPort.findByName(command.name()).isPresent()) {
+      return;
+    }
+    roleStorePort.store(
+        Role.createRole(command.name(), command.description(), command.sortOrder()));
   }
 }

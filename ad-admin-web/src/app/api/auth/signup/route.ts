@@ -1,10 +1,24 @@
 import { NextRequest, NextResponse } from "next/server";
-import { mockUsers } from "@/lib/mock-users";
+import { getBackendUrl } from "@/lib/api";
 
 export async function POST(request: NextRequest) {
-  const { name, email, password } = await request.json();
+  let body: unknown;
+  try {
+    body = await request.json();
+  } catch {
+    return NextResponse.json({ error: "잘못된 요청 형식입니다." }, { status: 400 });
+  }
 
-  if (!name || !email || !password) {
+  const { name, email, password } = body as Record<string, unknown>;
+
+  if (
+    typeof name !== "string" ||
+    !name.trim() ||
+    typeof email !== "string" ||
+    !email.trim() ||
+    typeof password !== "string" ||
+    !password.trim()
+  ) {
     return NextResponse.json(
       { error: "모든 항목을 입력해주세요." },
       { status: 400 },
@@ -18,14 +32,35 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const exists = mockUsers.find((u) => u.email === email);
-  if (exists) {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
     return NextResponse.json(
-      { error: "이미 등록된 이메일입니다." },
-      { status: 409 },
+      { error: "올바른 이메일 형식이 아닙니다." },
+      { status: 400 },
     );
   }
 
-  // Mock: 실제로 저장하지 않고 성공 응답만 반환
-  return NextResponse.json({ ok: true }, { status: 201 });
+  try {
+    const res = await fetch(`${getBackendUrl()}/api/auth/signup`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, email, password }),
+    });
+
+    const data = await res.json().catch(() => null);
+
+    if (!res.ok) {
+      return NextResponse.json(
+        { error: data?.error || "회원가입에 실패했습니다." },
+        { status: res.status },
+      );
+    }
+
+    return NextResponse.json(data ?? { ok: true }, { status: 201 });
+  } catch {
+    return NextResponse.json(
+      { error: "서버에 연결할 수 없습니다. 잠시 후 다시 시도해주세요." },
+      { status: 502 },
+    );
+  }
 }

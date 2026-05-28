@@ -9,17 +9,17 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 import org.giglab.ad.core.global.jpa.entity.AuditedEntity;
 import org.giglab.ad.core.role.domain.exception.RoleDomainException;
 import org.giglab.ad.core.role.domain.exception.RoleErrorCode;
 
+/** 역할 엔티티. */
 @Entity
 @Table(name = "roles")
 @Getter
-@SuperBuilder
+@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = lombok.AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 public class Role extends AuditedEntity {
 
   private static final String rolePrefix = "ROLE_";
@@ -33,6 +33,7 @@ public class Role extends AuditedEntity {
 
   @Builder.Default private int sortOrder = 0;
 
+  /** 역할을 생성한다. */
   public static Role createRole(String name, String description, int sortOrder) {
     if (!name.startsWith(rolePrefix)) {
       throw new RoleDomainException(RoleErrorCode.INVALID_ROLE_NAME);

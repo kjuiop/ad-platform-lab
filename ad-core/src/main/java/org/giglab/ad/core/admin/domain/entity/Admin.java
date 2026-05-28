@@ -16,6 +16,7 @@ import lombok.NoArgsConstructor;
 import org.giglab.ad.core.global.jpa.entity.AuditedEntity;
 import org.giglab.ad.core.global.jpa.entity.types.YnType;
 
+/** 관리자 엔티티. */
 @Getter
 @Builder
 @Entity
@@ -46,6 +47,7 @@ public class Admin extends AuditedEntity {
   @Column(nullable = false)
   private AdminRole role;
 
+  /** 관리자를 생성한다. */
   public static Admin create(String email, String name, String password, AdminRole role) {
     return Admin.builder().email(email).name(name).password(password).role(role).build();
   }

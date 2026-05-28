@@ -15,6 +15,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.giglab.ad.core.global.jpa.entity.AuditedEntity;
 
+/** 메뉴-역할 매핑 엔티티. */
 @Builder
 @Entity
 @Table(name = "menu_roles")
@@ -33,6 +34,7 @@ public class MenuRole extends AuditedEntity {
 
   private String role;
 
+  /** 메뉴와 역할로 MenuRole을 생성한다. */
   public static MenuRole of(Menu menu, String role) {
     return MenuRole.builder().menu(menu).role(role).build();
   }

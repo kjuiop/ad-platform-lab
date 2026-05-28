@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/** 관리자 생성 유스케이스. */
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -20,13 +21,19 @@ public class CreateAdminUseCase {
   private final PasswordEncoder passwordEncoder;
   private final AdminStorePort adminStorePort;
 
+  /** 관리자 생성 커맨드를 실행한다. */
   public CreateAdminResult execute(CreateAdminCommand command) {
     if (adminStorePort.existsByEmail(command.email())) {
       throw new AdminDomainException(AdminErrorCode.DUPLICATE_EMAIL);
     }
+    AdminRole role;
+    try {
+      role = AdminRole.valueOf(command.role());
+    } catch (IllegalArgumentException e) {
+      throw new AdminDomainException(AdminErrorCode.INVALID_ROLE);
+    }
     String encodedPassword = passwordEncoder.encode(command.password());
-    Admin admin =
-        Admin.create(command.email(), command.name(), encodedPassword, AdminRole.ADMINISTRATOR);
+    Admin admin = Admin.create(command.email(), command.name(), encodedPassword, role);
     Admin saved = adminStorePort.store(admin);
     return new CreateAdminResult(
         saved.getId(),

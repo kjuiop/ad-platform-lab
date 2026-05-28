@@ -23,6 +23,7 @@ import lombok.NoArgsConstructor;
 import org.giglab.ad.core.global.jpa.entity.AuditedEntity;
 import org.giglab.ad.core.global.jpa.entity.types.YnType;
 
+/** 메뉴 엔티티. */
 @Entity
 @Builder
 @Table(name = "menus")
@@ -67,7 +68,6 @@ public class Menu extends AuditedEntity {
       fetch = FetchType.LAZY,
       cascade = {CascadeType.PERSIST, CascadeType.MERGE})
   @OrderBy("sortOrder ASC")
-  @JoinColumn(name = "parent_id")
   private List<Menu> children = new ArrayList<>();
 
   @Builder.Default
@@ -76,4 +76,25 @@ public class Menu extends AuditedEntity {
       fetch = FetchType.LAZY,
       cascade = {CascadeType.PERSIST, CascadeType.MERGE})
   private List<MenuRole> menuRoles = new ArrayList<>();
+
+  /** 주어진 역할이 이 메뉴에 접근 가능한지 확인한다. */
+  public boolean isAccessibleBy(String roleName) {
+    return menuRoles.stream().anyMatch(mr -> mr.getRole().equals(roleName));
+  }
+
+  /** 메뉴가 활성 상태이고 표시 가능한지 확인한다. */
+  public boolean isVisible() {
+    return displayYn == YnType.Y && activeYn == YnType.Y && deleteYn == YnType.N;
+  }
+
+  /** 메뉴를 생성한다. */
+  public static Menu create(String name, String url, int sortOrder) {
+    return Menu.builder().name(name).url(url).sortOrder(sortOrder).build();
+  }
+
+  /** 부모 메뉴를 연결한다. */
+  public void attachParent(Menu parent) {
+    this.parent = parent;
+    parent.children.add(this);
+  }
 }

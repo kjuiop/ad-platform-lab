@@ -9,6 +9,7 @@ import org.giglab.ad.core.admin.infrastructure.persistence.AdminRepository;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Component;
 
+/** JPA 기반 관리자 저장 어댑터. */
 @Component
 @RequiredArgsConstructor
 public class JpaAdminStoreAdapter implements AdminStorePort {

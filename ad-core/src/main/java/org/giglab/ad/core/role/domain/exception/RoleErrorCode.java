@@ -3,6 +3,7 @@ package org.giglab.ad.core.role.domain.exception;
 import lombok.RequiredArgsConstructor;
 import org.giglab.ad.core.global.exception.DomainErrorCode;
 
+/** 역할 에러 코드. */
 @RequiredArgsConstructor
 public enum RoleErrorCode implements DomainErrorCode {
   INVALID_ROLE_NAME("ROLE-4001", "역할 이름은 ROLE_ 로 시작해야 합니다."),
@@ -13,11 +14,11 @@ public enum RoleErrorCode implements DomainErrorCode {
 
   @Override
   public String getCode() {
-    return "";
+    return code;
   }
 
   @Override
   public String getMessage() {
-    return "";
+    return message;
   }
 }

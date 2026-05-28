@@ -103,12 +103,12 @@ class CreateAdminUseCaseTest {
   @DisplayName("관리자 생성 시 비밀번호는 인코딩된 값으로 저장된다")
   void execute_success_passwordIsEncoded() {
     // given
-    CreateAdminCommand command =
-        new CreateAdminCommand("admin@example.com", "홍길동", "plainPassword");
     given(adminStorePort.existsByEmail("admin@example.com")).willReturn(false);
     given(passwordEncoder.encode("plainPassword")).willReturn("$2a$encodedPassword");
     Admin savedAdmin = createAdminWithId("admin@example.com", "홍길동", "$2a$encodedPassword");
     given(adminStorePort.store(any(Admin.class))).willReturn(savedAdmin);
+    CreateAdminCommand command =
+        new CreateAdminCommand("admin@example.com", "홍길동", "plainPassword");
 
     // when
     createAdminUseCase.execute(command);

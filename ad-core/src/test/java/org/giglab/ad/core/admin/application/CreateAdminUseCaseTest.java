@@ -64,11 +64,9 @@ class CreateAdminUseCaseTest {
         .isInstanceOf(AdminDomainException.class)
         .hasMessage("이미 등록된 이메일입니다.")
         .satisfies(
-            ex -> {
-              AdminDomainException domainEx = (AdminDomainException) ex;
-              assertThat(domainEx.getErrorCode()).isEqualTo(AdminErrorCode.DUPLICATE_EMAIL);
-              assertThat(domainEx.getErrorCode().getHttpStatusCode()).isEqualTo(409);
-            });
+            ex ->
+                assertThat(((AdminDomainException) ex).getErrorCode())
+                    .isEqualTo(AdminErrorCode.DUPLICATE_EMAIL));
   }
 
   @Test

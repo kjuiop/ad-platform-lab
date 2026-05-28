@@ -1,15 +1,10 @@
 package org.giglab.ad.core.admin.domain.exception;
 
-public class AdminDomainException extends RuntimeException {
+import org.giglab.ad.core.global.exception.DomainException;
 
-  private final AdminErrorCode errorCode;
+public class AdminDomainException extends DomainException {
 
   public AdminDomainException(AdminErrorCode errorCode) {
-    super(errorCode.getMessage());
-    this.errorCode = errorCode;
-  }
-
-  public AdminErrorCode getErrorCode() {
-    return errorCode;
+    super(errorCode);
   }
 }

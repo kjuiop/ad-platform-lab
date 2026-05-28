@@ -13,21 +13,21 @@ import org.junit.jupiter.params.provider.EnumSource;
 class AdminDomainExceptionTest {
 
   @Test
-  @DisplayName("DUPLICATE_EMAIL 에러코드로 예외를 생성하면 메시지와 HTTP 상태코드가 일치한다")
-  void exception_duplicateEmail_hasCorrectMessageAndStatus() {
+  @DisplayName("DUPLICATE_EMAIL 에러코드로 예외를 생성하면 메시지와 코드가 일치한다")
+  void exception_duplicateEmail_hasCorrectMessageAndCode() {
     AdminDomainException exception = new AdminDomainException(AdminErrorCode.DUPLICATE_EMAIL);
 
     assertThat(exception.getMessage()).isEqualTo("이미 등록된 이메일입니다.");
-    assertThat(exception.getErrorCode().getHttpStatusCode()).isEqualTo(409);
+    assertThat(exception.getErrorCode().getCode()).isEqualTo("ADMIN-4201");
   }
 
   @Test
-  @DisplayName("INVALID_PASSWORD 에러코드로 예외를 생성하면 메시지와 HTTP 상태코드가 일치한다")
-  void exception_invalidPassword_hasCorrectMessageAndStatus() {
+  @DisplayName("INVALID_PASSWORD 에러코드로 예외를 생성하면 메시지와 코드가 일치한다")
+  void exception_invalidPassword_hasCorrectMessageAndCode() {
     AdminDomainException exception = new AdminDomainException(AdminErrorCode.INVALID_PASSWORD);
 
     assertThat(exception.getMessage()).isEqualTo("비밀번호가 유효하지 않습니다.");
-    assertThat(exception.getErrorCode().getHttpStatusCode()).isEqualTo(400);
+    assertThat(exception.getErrorCode().getCode()).isEqualTo("ADMIN-4001");
   }
 
   @Test

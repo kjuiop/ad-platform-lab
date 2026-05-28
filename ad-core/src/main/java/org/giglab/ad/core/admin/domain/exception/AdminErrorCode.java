@@ -1,22 +1,26 @@
 package org.giglab.ad.core.admin.domain.exception;
 
-public enum AdminErrorCode {
-  DUPLICATE_EMAIL("이미 등록된 이메일입니다.", 409),
-  INVALID_PASSWORD("비밀번호가 유효하지 않습니다.", 400);
+import org.giglab.ad.core.global.exception.DomainErrorCode;
 
+public enum AdminErrorCode implements DomainErrorCode {
+  DUPLICATE_EMAIL("ADMIN-4201", "이미 등록된 이메일입니다."),
+  INVALID_PASSWORD("ADMIN-4001", "비밀번호가 유효하지 않습니다.");
+
+  private final String code;
   private final String message;
-  private final int httpStatusCode;
 
-  AdminErrorCode(String message, int httpStatusCode) {
+  AdminErrorCode(String code, String message) {
+    this.code = code;
     this.message = message;
-    this.httpStatusCode = httpStatusCode;
   }
 
+  @Override
+  public String getCode() {
+    return code;
+  }
+
+  @Override
   public String getMessage() {
     return message;
-  }
-
-  public int getHttpStatusCode() {
-    return httpStatusCode;
   }
 }

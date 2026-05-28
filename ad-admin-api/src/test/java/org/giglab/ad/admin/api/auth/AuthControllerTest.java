@@ -62,7 +62,8 @@ class AuthControllerTest {
         .perform(
             post("/api/auth/signup").contentType(MediaType.APPLICATION_JSON).content(requestBody))
         .andExpect(status().isConflict())
-        .andExpect(jsonPath("$.error").value("이미 등록된 이메일입니다."));
+        .andExpect(jsonPath("$.error.code").value("ADMIN-4201"))
+        .andExpect(jsonPath("$.error.message").value("이미 등록된 이메일입니다."));
   }
 
   @Test

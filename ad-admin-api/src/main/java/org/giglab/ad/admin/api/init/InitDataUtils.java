@@ -48,6 +48,6 @@ public class InitDataUtils {
 
   private void initAdmins() {
     adminService.createAdmin(
-        new CreateAdminCommand("admin@giglab.org", "admin1234!", "초기관리자", "ROLE_ADMINISTRATOR"));
+        new CreateAdminCommand("admin@giglab.org", "초기관리자", "admin1234!", "ROLE_ADMINISTRATOR"));
   }
 }

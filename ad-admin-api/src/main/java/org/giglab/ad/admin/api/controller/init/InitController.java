@@ -3,12 +3,14 @@ package org.giglab.ad.admin.api.controller.init;
 import lombok.RequiredArgsConstructor;
 import org.giglab.ad.admin.api.init.InitDataUtils;
 import org.giglab.ad.admin.api.response.ApiResponse;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /** 초기 데이터 생성 API 컨트롤러. */
+@Profile("local")
 @RestController
 @RequestMapping("/api/init-data")
 @RequiredArgsConstructor

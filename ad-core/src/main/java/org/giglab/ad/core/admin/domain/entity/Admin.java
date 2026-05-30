@@ -63,12 +63,7 @@ public class Admin extends AuditedEntity {
 
   /** 관리자를 생성한다. */
   public static Admin create(String email, String name, String password) {
-    return Admin.builder()
-        .email(email)
-        .name(name)
-        .password(password)
-        .status(AdminStatus.PENDING)
-        .build();
+    return Admin.builder().email(email).name(name).password(password).build();
   }
 
   /** 역할을 추가한다. */

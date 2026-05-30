@@ -20,9 +20,12 @@ public class InitDataUtils {
   private final MenuService menuService;
   private final AdminService adminService;
 
-  /** 역할, 메뉴, 관리자 초기 데이터를 생성한다. */
+  /** 역할, 메뉴, 관리자 초기 데이터를 생성한다. 이미 초기화된 경우 건너뛴다. */
   @Transactional
   public void init() {
+    if (roleService.hasData() && menuService.hasData() && adminService.hasData()) {
+      return;
+    }
     initRoles();
     initMenus();
     initAdmins();

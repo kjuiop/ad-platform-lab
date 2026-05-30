@@ -7,4 +7,7 @@ import org.giglab.ad.core.role.domain.entity.Role;
 public interface RoleQueryPort {
   /** 이름으로 역할을 조회한다. */
   Optional<Role> findByName(String name);
+
+  /** 전체 역할 수를 반환한다. */
+  long count();
 }

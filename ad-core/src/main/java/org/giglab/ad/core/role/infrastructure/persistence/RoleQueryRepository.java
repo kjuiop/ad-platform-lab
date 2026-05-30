@@ -19,4 +19,10 @@ public class RoleQueryRepository {
   public Optional<Role> findByName(String name) {
     return Optional.ofNullable(queryFactory.selectFrom(role).where(role.name.eq(name)).fetchOne());
   }
+
+  /** 전체 역할 수를 반환한다. */
+  public long count() {
+    Long result = queryFactory.select(role.count()).from(role).fetchOne();
+    return result != null ? result : 0L;
+  }
 }

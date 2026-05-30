@@ -18,4 +18,9 @@ public class JpaRoleQueryAdapter implements RoleQueryPort {
   public Optional<Role> findByName(String name) {
     return queryRepository.findByName(name);
   }
+
+  @Override
+  public long count() {
+    return queryRepository.count();
+  }
 }

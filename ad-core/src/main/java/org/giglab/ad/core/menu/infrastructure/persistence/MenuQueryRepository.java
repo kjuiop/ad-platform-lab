@@ -29,6 +29,12 @@ public class MenuQueryRepository {
         queryFactory.selectFrom(menu).where(defaultCondition(), menu.id.eq(id)).fetchOne());
   }
 
+  /** 활성 메뉴 수를 반환한다. */
+  public long count() {
+    Long result = queryFactory.select(menu.count()).from(menu).where(defaultCondition()).fetchOne();
+    return result != null ? result : 0L;
+  }
+
   private BooleanExpression defaultCondition() {
     return menu.deleteYn.eq(YnType.N);
   }

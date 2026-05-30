@@ -10,4 +10,7 @@ public interface MenuQueryPort {
 
   /** ID로 메뉴를 조회한다. */
   Optional<Menu> findById(Long id);
+
+  /** 활성 메뉴 수를 반환한다. */
+  long count();
 }

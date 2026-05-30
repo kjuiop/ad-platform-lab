@@ -16,4 +16,9 @@ public class JpaAdminQueryAdapter implements AdminQueryPort {
   public boolean existsByEmail(String email) {
     return adminQueryRepository.existsByEmail(email);
   }
+
+  @Override
+  public long count() {
+    return adminQueryRepository.count();
+  }
 }

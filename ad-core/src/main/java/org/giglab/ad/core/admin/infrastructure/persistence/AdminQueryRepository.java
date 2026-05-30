@@ -25,6 +25,13 @@ public class AdminQueryRepository {
         != null;
   }
 
+  /** 활성 관리자 수를 반환한다. */
+  public long count() {
+    Long result =
+        queryFactory.select(admin.count()).from(admin).where(defaultCondition()).fetchOne();
+    return result != null ? result : 0L;
+  }
+
   private BooleanExpression defaultCondition() {
     return admin.deleteYn.eq(YnType.N);
   }

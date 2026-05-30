@@ -23,4 +23,9 @@ public class JpaMenuQueryAdapter implements MenuQueryPort {
   public Optional<Menu> findById(Long id) {
     return menuQueryRepository.findById(id);
   }
+
+  @Override
+  public long count() {
+    return menuQueryRepository.count();
+  }
 }

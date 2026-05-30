@@ -17,12 +17,12 @@ public class MenuService {
   private final CreateChildMenuUseCase createChildMenuUseCase;
   private final MenuQueryPort menuQueryPort;
 
-  /** 최상위 메뉴와 역할 매핑을 초기화한다. 이미 존재하면 기존 메뉴를 반환한다. */
+  /** 최상위 메뉴와 역할 매핑을 생성한다. URL이 중복이면 예외를 던진다. */
   public Long createMenu(CreateMenuCommand command) {
     return createMenuUseCase.execute(command);
   }
 
-  /** 자식 메뉴와 역할 매핑을 초기화한다. 이미 존재하면 기존 메뉴를 반환한다. */
+  /** 자식 메뉴와 역할 매핑을 생성한다. URL이 중복이거나 부모 메뉴가 없으면 예외를 던진다. */
   public void createChildMenu(CreateChildMenuCommand command) {
     createChildMenuUseCase.execute(command);
   }

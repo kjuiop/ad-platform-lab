@@ -26,7 +26,7 @@ public class CreateMenuUseCase {
     }
 
     Menu menu = Menu.create(command.name(), command.url(), command.sortOrder());
-    command.roles().forEach(menu::addRole);
+    command.roles().stream().distinct().forEach(menu::addRole);
 
     return menuStorePort.store(menu).getId();
   }

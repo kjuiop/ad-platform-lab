@@ -13,7 +13,7 @@ public enum AdminStatus {
 
   WITHDRAW("Withdraw", "탈퇴"),
 
-  INACTIVE("InActive", "비활성화");
+  INACTIVE("Inactive", "비활성화");
 
   private final String key;
 

@@ -35,7 +35,7 @@ public class CreateChildMenuUseCase {
 
     Menu menu = Menu.create(command.name(), command.url(), command.sortOrder());
     menu.attachParent(parent);
-    command.roles().forEach(menu::addRole);
+    command.roles().stream().distinct().forEach(menu::addRole);
 
     menuStorePort.store(menu);
   }

@@ -43,6 +43,6 @@ class AdminTest {
     admin.addRole("ROLE_ADMINISTRATOR");
 
     assertThat(admin.getRoles()).hasSize(1);
-    assertThat(admin.getRoles().get(0).getRole()).isEqualTo("ROLE_ADMINISTRATOR");
+    assertThat(admin.getRoles().getFirst().getRole()).isEqualTo("ROLE_ADMINISTRATOR");
   }
 }

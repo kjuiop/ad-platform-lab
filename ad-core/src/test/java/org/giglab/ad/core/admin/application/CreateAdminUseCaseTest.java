@@ -8,6 +8,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
+import java.util.Objects;
 import org.giglab.ad.core.admin.application.dto.command.CreateAdminCommand;
 import org.giglab.ad.core.admin.application.dto.command.CreateAdminResult;
 import org.giglab.ad.core.admin.application.port.AdminQueryPort;
@@ -41,7 +42,7 @@ class CreateAdminUseCaseTest {
     CreateAdminCommand command =
         new CreateAdminCommand("admin@example.com", "홍길동", "password123", "ROLE_ADMINISTRATOR");
     given(adminQueryPort.existsByEmail("admin@example.com")).willReturn(false);
-    given(passwordEncoder.encode("password123")).willReturn("$2a$encoded");
+    given(Objects.requireNonNull(passwordEncoder.encode("password123"))).willReturn("$2a$encoded");
     Admin savedAdmin = createAdminWithId("admin@example.com", "홍길동", "$2a$encoded");
     given(adminStorePort.store(any(Admin.class))).willReturn(savedAdmin);
 
@@ -109,7 +110,8 @@ class CreateAdminUseCaseTest {
   void execute_success_passwordIsEncoded() {
     // given
     given(adminQueryPort.existsByEmail("admin@example.com")).willReturn(false);
-    given(passwordEncoder.encode("plainPassword")).willReturn("$2a$encodedPassword");
+    given(Objects.requireNonNull(passwordEncoder.encode("plainPassword")))
+        .willReturn("$2a$encodedPassword");
     Admin savedAdmin = createAdminWithId("admin@example.com", "홍길동", "$2a$encodedPassword");
     given(adminStorePort.store(any(Admin.class))).willReturn(savedAdmin);
     CreateAdminCommand command =

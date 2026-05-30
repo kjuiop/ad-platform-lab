@@ -1,7 +1,9 @@
 package org.giglab.ad.core.admin.infrastructure.adapter;
 
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.giglab.ad.core.admin.application.port.AdminQueryPort;
+import org.giglab.ad.core.admin.domain.entity.Admin;
 import org.giglab.ad.core.admin.infrastructure.persistence.AdminQueryRepository;
 import org.springframework.stereotype.Component;
 
@@ -20,5 +22,10 @@ public class JpaAdminQueryAdapter implements AdminQueryPort {
   @Override
   public long count() {
     return adminQueryRepository.count();
+  }
+
+  @Override
+  public Optional<Admin> findByEmail(String email) {
+    return adminQueryRepository.findByEmail(email);
   }
 }

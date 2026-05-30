@@ -1,4 +1,4 @@
-package org.giglab.ad.core.admin.application;
+package org.giglab.ad.core.admin.application.usecase;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -13,7 +13,6 @@ import org.giglab.ad.core.admin.application.dto.command.CreateAdminCommand;
 import org.giglab.ad.core.admin.application.dto.command.CreateAdminResult;
 import org.giglab.ad.core.admin.application.port.AdminQueryPort;
 import org.giglab.ad.core.admin.application.port.AdminStorePort;
-import org.giglab.ad.core.admin.application.usecase.CreateAdminUseCase;
 import org.giglab.ad.core.admin.domain.entity.Admin;
 import org.giglab.ad.core.admin.domain.exception.AdminDomainException;
 import org.giglab.ad.core.admin.domain.exception.AdminErrorCode;

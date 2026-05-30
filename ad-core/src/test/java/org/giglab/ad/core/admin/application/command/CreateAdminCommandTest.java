@@ -1,4 +1,4 @@
-package org.giglab.ad.core.admin.application;
+package org.giglab.ad.core.admin.application.command;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;

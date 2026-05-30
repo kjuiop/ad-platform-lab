@@ -1,5 +1,8 @@
 package org.giglab.ad.core.admin.application.port;
 
+import java.util.Optional;
+import org.giglab.ad.core.admin.domain.entity.Admin;
+
 /** 관리자 조회 포트. */
 public interface AdminQueryPort {
 
@@ -8,4 +11,6 @@ public interface AdminQueryPort {
 
   /** 활성 관리자 수를 반환한다. */
   long count();
+
+  Optional<Admin> findByEmail(String mail);
 }

@@ -28,7 +28,7 @@ public class CreateAdminUseCase {
       throw new AdminDomainException(AdminErrorCode.DUPLICATE_EMAIL);
     }
     String encodedPassword = passwordEncoder.encode(command.password());
-    Admin admin = Admin.create(command.email(), command.name(), encodedPassword);
+    Admin admin = Admin.create(command.email(), command.name(), encodedPassword, command.role());
     admin.addRole(command.role());
     Admin saved = adminStorePort.store(admin);
     return new CreateAdminResult(

@@ -125,6 +125,6 @@ class CreateAdminUseCaseTest {
 
   /** 테스트용 Admin 객체 생성 헬퍼 — id는 JPA 영속화 전에는 null이므로 create()로 생성. */
   private Admin createAdminWithId(String email, String name, String password) {
-    return Admin.create(email, name, password);
+    return Admin.create(email, name, password, "ROLE_ADMINISTRATOR");
   }
 }

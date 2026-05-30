@@ -54,6 +54,9 @@ public class Admin extends AuditedEntity {
   @Column(nullable = false)
   private String password;
 
+  @Column(nullable = false)
+  private String primaryRole;
+
   @Builder.Default
   @OneToMany(
       mappedBy = "administrator",
@@ -62,8 +65,13 @@ public class Admin extends AuditedEntity {
   private List<AdminRole> roles = new ArrayList<>();
 
   /** 관리자를 생성한다. */
-  public static Admin create(String email, String name, String password) {
-    return Admin.builder().email(email).name(name).password(password).build();
+  public static Admin create(String email, String name, String password, String primaryRole) {
+    return Admin.builder()
+        .email(email)
+        .name(name)
+        .password(password)
+        .primaryRole(primaryRole)
+        .build();
   }
 
   /** 역할을 추가한다. */

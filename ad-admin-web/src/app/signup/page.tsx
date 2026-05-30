@@ -20,7 +20,7 @@ export default function SignupPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
-  const [role, setRole] = useState("ROLE_ADMINISTRATOR");
+  const [role, setRole] = useState("ROLE_PARTNER_ADMIN");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -118,7 +118,6 @@ export default function SignupPage() {
                 onChange={(e) => setRole(e.target.value)}
                 className="w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
               >
-                <option value="ROLE_ADMINISTRATOR">최고 관리자</option>
                 <option value="ROLE_PARTNER_ADMIN">파트너 관리자</option>
                 <option value="ROLE_BRAND_ADMIN">브랜드 관리자</option>
               </select>

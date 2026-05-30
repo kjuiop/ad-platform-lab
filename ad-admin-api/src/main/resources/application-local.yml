@@ -1,7 +1,7 @@
 spring:
   datasource:
     # 로컬 전용 — 운영 환경에서는 useSSL=true, allowPublicKeyRetrieval=false
-    url: jdbc:mysql://localhost:3306/ad_admin?useSSL=false&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://localhost:3306/ad?useSSL=false&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: ${DB_USERNAME:ad_user}
     password: ${DB_PASSWORD:ad_password}

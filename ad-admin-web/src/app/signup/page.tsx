@@ -20,6 +20,7 @@ export default function SignupPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
+  const [role, setRole] = useState("ROLE_ADMINISTRATOR");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -36,7 +37,7 @@ export default function SignupPage() {
     const res = await fetch("/api/auth/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, email, password }),
+      body: JSON.stringify({ name, email, password, role }),
     });
 
     if (!res.ok) {
@@ -108,6 +109,19 @@ export default function SignupPage() {
                 placeholder="비밀번호를 다시 입력"
                 autoComplete="new-password"
               />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="role">역할</Label>
+              <select
+                id="role"
+                value={role}
+                onChange={(e) => setRole(e.target.value)}
+                className="w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              >
+                <option value="ROLE_ADMINISTRATOR">최고 관리자</option>
+                <option value="ROLE_PARTNER_ADMIN">파트너 관리자</option>
+                <option value="ROLE_BRAND_ADMIN">브랜드 관리자</option>
+              </select>
             </div>
             <Button type="submit" className="w-full mt-2" disabled={loading}>
               {loading ? "가입 중..." : "가입하기"}

@@ -9,7 +9,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "잘못된 요청 형식입니다." }, { status: 400 });
   }
 
-  const { name, email, password } = body as Record<string, unknown>;
+  const { name, email, password, role } = body as Record<string, unknown>;
 
   if (
     typeof name !== "string" ||
@@ -23,6 +23,10 @@ export async function POST(request: NextRequest) {
       { error: "모든 항목을 입력해주세요." },
       { status: 400 },
     );
+  }
+
+  if (typeof role !== "string" || !role.trim()) {
+    return NextResponse.json({ error: "역할을 선택해주세요." }, { status: 400 });
   }
 
   if (password.length < 8) {
@@ -44,7 +48,7 @@ export async function POST(request: NextRequest) {
     const res = await fetch(`${getBackendUrl()}/api/auth/signup`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, email, password }),
+      body: JSON.stringify({ name, email, password, role }),
     });
 
     const data = await res.json().catch(() => null);

@@ -41,7 +41,7 @@ public class InitDataUtils {
     List<String> allRoles = List.of("ROLE_ADMINISTRATOR", "ROLE_PARTNER_ADMIN", "ROLE_BRAND_ADMIN");
     List<String> adminOnly = List.of("ROLE_ADMINISTRATOR");
 
-    menuService.createMenu(new CreateMenuCommand("대시보드", "/dashboard", 1, allRoles));
+    menuService.createMenu(new CreateMenuCommand("대시보드", "/", 1, allRoles));
     menuService.createMenu(new CreateMenuCommand("광고 관리", "/ads", 2, allRoles));
     menuService.createMenu(new CreateMenuCommand("파트너 관리", "/partners", 3, adminOnly));
 

@@ -5,16 +5,14 @@ services:
     restart: unless-stopped
     ports:
       - "3306:3306"
+    env_file:
+      - .env
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: ad_admin
-      MYSQL_USER: ad_user
-      MYSQL_PASSWORD: ad_password
       TZ: Asia/Seoul
     volumes:
       - mysql_data:/var/lib/mysql
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1"]
       interval: 10s
       timeout: 5s
       retries: 5

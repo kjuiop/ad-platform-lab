@@ -28,8 +28,8 @@ dependencies {
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     annotationProcessor("org.projectlombok:lombok")
 
-    // h2 (in-memory DB for local/dev)
-    runtimeOnly("com.h2database:h2")
+    // MySQL driver (local profile)
+    runtimeOnly("com.mysql:mysql-connector-j")
 
     // test
     testImplementation("org.springframework.boot:spring-boot-starter-test")

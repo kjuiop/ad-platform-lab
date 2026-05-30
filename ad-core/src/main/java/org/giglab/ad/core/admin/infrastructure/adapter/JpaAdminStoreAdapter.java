@@ -24,9 +24,4 @@ public class JpaAdminStoreAdapter implements AdminStorePort {
       throw new AdminDomainException(AdminErrorCode.DUPLICATE_EMAIL);
     }
   }
-
-  @Override
-  public boolean existsByEmail(String email) {
-    return adminRepository.existsByEmail(email);
-  }
 }

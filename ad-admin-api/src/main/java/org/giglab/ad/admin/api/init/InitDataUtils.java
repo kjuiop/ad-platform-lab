@@ -5,7 +5,8 @@ import lombok.RequiredArgsConstructor;
 import org.giglab.ad.core.admin.application.AdminService;
 import org.giglab.ad.core.admin.application.dto.command.CreateAdminCommand;
 import org.giglab.ad.core.menu.application.MenuService;
-import org.giglab.ad.core.menu.domain.entity.Menu;
+import org.giglab.ad.core.menu.application.dto.command.CreateChildMenuCommand;
+import org.giglab.ad.core.menu.application.dto.command.CreateMenuCommand;
 import org.giglab.ad.core.role.application.RoleService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,9 +20,12 @@ public class InitDataUtils {
   private final MenuService menuService;
   private final AdminService adminService;
 
-  /** 역할, 메뉴, 관리자 초기 데이터를 생성한다. */
+  /** 역할, 메뉴, 관리자 초기 데이터를 생성한다. 이미 초기화된 경우 건너뛴다. */
   @Transactional
   public void init() {
+    if (roleService.hasData() || menuService.hasData() || adminService.hasData()) {
+      return;
+    }
     initRoles();
     initMenus();
     initAdmins();
@@ -37,17 +41,20 @@ public class InitDataUtils {
     List<String> allRoles = List.of("ROLE_ADMINISTRATOR", "ROLE_PARTNER_ADMIN", "ROLE_BRAND_ADMIN");
     List<String> adminOnly = List.of("ROLE_ADMINISTRATOR");
 
-    menuService.initMenu("대시보드", "/dashboard", 1, allRoles);
-    menuService.initMenu("광고 관리", "/ads", 2, allRoles);
-    menuService.initMenu("파트너 관리", "/partners", 3, adminOnly);
+    menuService.createMenu(new CreateMenuCommand("대시보드", "/dashboard", 1, allRoles));
+    menuService.createMenu(new CreateMenuCommand("광고 관리", "/ads", 2, allRoles));
+    menuService.createMenu(new CreateMenuCommand("파트너 관리", "/partners", 3, adminOnly));
 
-    Menu settingMenu = menuService.initMenu("설정", "/settings", 99, adminOnly);
-    menuService.initChildMenu("메뉴 관리", "/settings/menus", 1, adminOnly, settingMenu);
-    menuService.initChildMenu("관리자 관리", "/settings/admins", 2, adminOnly, settingMenu);
+    Long settingsMenuId =
+        menuService.createMenu(new CreateMenuCommand("설정", "/settings", 99, adminOnly));
+    menuService.createChildMenu(
+        new CreateChildMenuCommand("메뉴 관리", "/settings/menus", 1, adminOnly, settingsMenuId));
+    menuService.createChildMenu(
+        new CreateChildMenuCommand("관리자 관리", "/settings/admins", 2, adminOnly, settingsMenuId));
   }
 
   private void initAdmins() {
-    adminService.initAdmin(
+    adminService.createAdmin(
         new CreateAdminCommand("admin@giglab.org", "초기관리자", "admin1234!", "ROLE_ADMINISTRATOR"));
   }
 }

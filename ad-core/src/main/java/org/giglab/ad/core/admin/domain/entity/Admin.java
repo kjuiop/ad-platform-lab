@@ -18,6 +18,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.giglab.ad.core.admin.domain.entity.types.AdminStatus;
 import org.giglab.ad.core.global.jpa.entity.AuditedEntity;
 import org.giglab.ad.core.global.jpa.entity.types.YnType;
 
@@ -41,6 +42,11 @@ public class Admin extends AuditedEntity {
   @Column(columnDefinition = "varchar(2) default 'N'", nullable = false)
   @Enumerated(EnumType.STRING)
   private YnType deleteYn = YnType.N;
+
+  @Builder.Default
+  @Column(length = 50)
+  @Enumerated(EnumType.STRING)
+  private AdminStatus status = AdminStatus.PENDING;
 
   @Column(nullable = false)
   private String name;

@@ -115,4 +115,84 @@ class AuthControllerTest {
             post("/api/auth/signup").contentType(MediaType.APPLICATION_JSON).content(requestBody))
         .andExpect(status().isBadRequest());
   }
+
+  @Test
+  @DisplayName("올바른 이메일, 비밀번호로 로그인하면 200 OK 와 token 을 반환한다.")
+  void login_success() throws Exception {
+    // 먼저 회원가입
+    mockMvc.perform(
+        post("/api/auth/signup")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(
+                """
+                {"name": "홍길동", "email": "login@example.com",
+                 "password": "password123", "role": "ROLE_ADMINISTRATOR"}
+                """));
+
+    // 로그인
+    mockMvc
+        .perform(
+            post("/api/auth/login")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(
+                    """
+                    {"email": "login@example.com", "password": "password123"}
+                    """))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.token").isString())
+        .andExpect(jsonPath("$.role").value("ROLE_ADMINISTRATOR"));
+  }
+
+  @Test
+  @DisplayName("존재하지 않는 이메일로 로그인하면 401 Unauthorized 응답")
+  void login_invalidEmail() throws Exception {
+    mockMvc
+        .perform(
+            post("/api/auth/login")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(
+                    """
+                    {"email": "nobody@example.com", "password": "password123"}
+                    """))
+        .andExpect(status().isUnauthorized())
+        .andExpect(jsonPath("$.error.code").value("ADMIN-4101"));
+  }
+
+  @Test
+  @DisplayName("비밀번호가 틀리면 401 Unauthorized 응답")
+  void login_wrongPassword() throws Exception {
+    mockMvc.perform(
+        post("/api/auth/signup")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(
+                """
+                {"name": "홍길동", "email": "wrong@example.com",
+                 "password": "password123", "role": "ROLE_ADMINISTRATOR"}
+                """));
+
+    mockMvc
+        .perform(
+            post("/api/auth/login")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(
+                    """
+                    {"email": "wrong@example.com", "password": "wrongpassword"}
+                    """))
+        .andExpect(status().isUnauthorized())
+        .andExpect(jsonPath("$.error.code").value("ADMIN-4101"));
+  }
+
+  @Test
+  @DisplayName("이메일 또는 비밀번호가 없으면 400 Bad Request 응답")
+  void login_missingFields() throws Exception {
+    mockMvc
+        .perform(
+            post("/api/auth/login")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(
+                    """
+                    {"email": ""}
+                    """))
+        .andExpect(status().isBadRequest());
+  }
 }

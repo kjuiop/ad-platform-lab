@@ -8,3 +8,7 @@ spring:
     hibernate:
       ddl-auto: create-drop
     show-sql: false
+
+jwt:
+  secret: test-secret-key-must-be-at-least-32-chars!!
+  expiration-ms: 3600000

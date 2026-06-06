@@ -9,7 +9,7 @@ public enum AdminErrorCode implements DomainErrorCode {
   DUPLICATE_EMAIL("ADMIN-4201", "이미 등록된 이메일입니다."),
   INVALID_PASSWORD("ADMIN-4001", "비밀번호가 유효하지 않습니다."),
   INVALID_ROLE("ADMIN-4003", "유효하지 않은 역할입니다."),
-  INVALID_CREDENTIALS("ADMIN-4011", "이메일 또는 비밀번호가 올바르지 않습니다.");
+  INVALID_CREDENTIALS("ADMIN-4101", "이메일 또는 비밀번호가 올바르지 않습니다.");
 
   private final String code;
   private final String message;

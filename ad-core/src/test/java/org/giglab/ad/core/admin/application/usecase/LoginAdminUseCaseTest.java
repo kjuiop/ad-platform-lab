@@ -58,6 +58,7 @@ public class LoginAdminUseCaseTest {
         loginAdminUseCase.execute(new LoginAdminCommand("test@example.com", "rawPassword"));
 
     // then
+    assertThat(result.id()).isEqualTo(1L);
     assertThat(result.email()).isEqualTo("test@example.com");
     assertThat(result.role()).isEqualTo("ROLE_ADMINISTRATOR");
   }

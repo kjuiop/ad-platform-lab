@@ -2,6 +2,8 @@ package org.giglab.ad.admin.api.controller.auth;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.giglab.ad.admin.api.dto.LoginRequest;
+import org.giglab.ad.admin.api.dto.LoginResponse;
 import org.giglab.ad.admin.api.dto.SignupRequest;
 import org.giglab.ad.admin.api.dto.SignupResponse;
 import org.giglab.ad.admin.api.facade.AuthFacade;
@@ -25,5 +27,11 @@ public class AuthController {
   public ResponseEntity<SignupResponse> signup(@Valid @RequestBody SignupRequest request) {
     SignupResponse response = authFacade.adminSignUp(request);
     return ResponseEntity.status(HttpStatus.CREATED).body(response);
+  }
+
+  /** 관리자 로그인 API. */
+  @PostMapping("/login")
+  public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request) {
+    return ResponseEntity.ok(authFacade.login(request));
   }
 }

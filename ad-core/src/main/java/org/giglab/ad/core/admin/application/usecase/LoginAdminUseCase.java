@@ -29,6 +29,6 @@ public class LoginAdminUseCase {
       throw new AdminDomainException(AdminErrorCode.INVALID_CREDENTIALS);
     }
 
-    return new LoginAdminResult(admin.getEmail(), admin.getPrimaryRole());
+    return new LoginAdminResult(admin.getId(), admin.getEmail(), admin.getPrimaryRole());
   }
 }
